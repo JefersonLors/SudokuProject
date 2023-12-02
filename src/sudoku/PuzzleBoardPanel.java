@@ -26,20 +26,47 @@ public class PuzzleBoardPanel extends JPanel {
         super.setPreferredSize(new Dimension(SudokuConstants.BOARD_WIDTH, SudokuConstants.BOARD_HEIGHT));
         super.setVisible(true);
     }
-    public void newGame(){
-        this.puzzle.newPuzzle(GameLevel.EASY);
 
+    private void createCellsGrid(){
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
                 this.cells[row][col] = new Cell(row, col);
-                this.cells[row][col].newGame(puzzle.grid[row][col], puzzle.isGiven[row][col]);
-                this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
-                if( this.cells[row][col].isEditable() ){
-                    this.cells[row][col].addActionListener(new CellInputListener());
-                }
+                this.cells[row][col].setEditable(false);
                 super.add(cells[row][col]);
             }
         }
+    }
+    private void setCellsGridValues(){
+        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                this.cells[row][col].newGame(puzzle.grid[row][col], puzzle.isGiven[row][col]);
+                if( this.cells[row][col].isEditable() ){
+                    this.cells[row][col].addActionListener(new CellInputListener());
+                }
+            }
+        }
+    }
+    public void newGame(GameLevel level){
+        this.createCellsGrid();
+
+        if( level != GameLevel.NON_SELECTED){
+            System.out.println("game level dentro = " + level);
+            this.puzzle.newPuzzle(level);
+            this.setCellsGridValues();
+        }
+
+//        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+//            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+//                this.cells[row][col] = new Cell(row, col);
+//                this.cells[row][col].setEditable(false);
+////                if( level != GameLevel.NON_SELECTED)
+////                    this.cells[row][col].newGame(puzzle.grid[row][col], puzzle.isGiven[row][col]);
+////                if( this.cells[row][col].isEditable() ){
+////                    this.cells[row][col].addActionListener(new CellInputListener());
+////                }
+//                super.add(cells[row][col]);
+//            }
+//        }
         this.paintSubGrid();
     }
     private void paintSubGrid(){
@@ -68,6 +95,7 @@ public class PuzzleBoardPanel extends JPanel {
 
         for (int row = 0; row < SudokuConstants.GRID_SIZE; row++) {
             for (int col = 0; col < SudokuConstants.GRID_SIZE ; col++) {
+                this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
                 if( row == 0 ){
                     if( col == 0){
                         this.cells[row][col].setBorder(BorderFactory.createMatteBorder(3, 3, 1, 1, Color.BLACK));

@@ -1,5 +1,7 @@
 package sudoku;
 
+import sudoku.enums.GameLevel;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,7 +14,10 @@ public class SudokuMain extends JFrame {
     private JRadioButton easyLevel;
     private JRadioButton mediumLevel;
     private JRadioButton hardLevel;
-    private ButtonGroup levels;
+    private ButtonGroup levelsGroup;
+    private GameLevel gameLevel = GameLevel.NON_SELECTED;
+    private GameLevel lastGameLevel = GameLevel.NON_SELECTED;
+
     public static void main( String[] args ){
         EventQueue.invokeLater(() -> {
             try {
@@ -28,22 +33,58 @@ public class SudokuMain extends JFrame {
         this.newGame();
     }
     private void inicializeComponents(){
+
         this.gameBoard = new PuzzleBoardPanel();
         this.toolBar = new JToolBar();
         this.restartButton = new JButton("   Restart    ");
+        this.restartButton.addActionListener(e -> {
+            this.getContentPane().remove(this.gameBoard);
+            this.gameBoard = new PuzzleBoardPanel();
+            this.gameBoard.newGame(lastGameLevel);
+            this.getContentPane().add(this.gameBoard);
+            revalidate();
+        });
+
         this.newGameButton = new JButton("   New Game   ");
+        this.newGameButton.addActionListener(e->{
+            if( gameLevel == GameLevel.NON_SELECTED ){
+                JOptionPane.showMessageDialog(this, "Por favor, selecione um nível de jogo", "Aviso", JOptionPane.ERROR_MESSAGE);
+            }else{
+                this.getContentPane().remove(this.gameBoard);
+                this.gameBoard = new PuzzleBoardPanel();
+                this.gameBoard.newGame(gameLevel);
+                this.getContentPane().add(this.gameBoard);
+                revalidate();
+                lastGameLevel = gameLevel;
+            }
+        });
+
         this.easyLevel = new JRadioButton("easy");
+        this.easyLevel.addActionListener(e->{
+            gameLevel = GameLevel.EASY;
+            System.out.println(gameLevel);
+        });
+
         this.mediumLevel = new JRadioButton("medium");
+        this.mediumLevel.addActionListener(e->{
+            gameLevel = GameLevel.MEDIUM;
+            System.out.println(gameLevel);
+        });
+
         this.hardLevel = new JRadioButton("hard");
-        this.levels = new ButtonGroup();
+        this.hardLevel.addActionListener(e->{
+            gameLevel = GameLevel.HARD;
+            System.out.println(gameLevel);
+        });
+
+        this.levelsGroup = new ButtonGroup();
     }
     public void newGame(){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocation(700, 200); //Posiciona o frame na tela
         this.setTitle("Sudoku Game");
         this.setToolBar();
-
-        this.gameBoard.newGame();
+        this.gameBoard.newGame(gameLevel);
         this.getContentPane().add(this.gameBoard, BorderLayout.CENTER);
         this.pack();
 //        this.setSize(SudokuConstants.BOARD_WIDTH, SudokuConstants.BOARD_HEIGHT); //seta as dimensões da tela
@@ -51,6 +92,7 @@ public class SudokuMain extends JFrame {
 
     }
     private void setToolBar(){
+        //ADICIONAR UMA LABEL COM O NIVEL ATUAL
         this.toolBar.setVisible(true);
 
         this.toolBar.add(this.restartButton);
@@ -58,13 +100,12 @@ public class SudokuMain extends JFrame {
         this.toolBar.add(this.newGameButton);
         this.toolBar.add(Box.createHorizontalStrut(25));
 
-        this.levels.add(this.easyLevel);
-        this.levels.add(this.mediumLevel);
-        this.levels.add(this.hardLevel);
+        this.levelsGroup.add(this.easyLevel);
+        this.levelsGroup.add(this.mediumLevel);
+        this.levelsGroup.add(this.hardLevel);
 
         this.toolBar.add(this.easyLevel);
         this.toolBar.add(this.mediumLevel);
-
         this.toolBar.add(this.hardLevel);
 
         this.getContentPane().add(this.toolBar, BorderLayout.NORTH);
