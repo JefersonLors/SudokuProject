@@ -7,13 +7,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
-public class GameBoardPanel extends JPanel {
+public class PuzzleBoardPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private Cell[][] cells;
     private Puzzle puzzle;
 
-    public GameBoardPanel(){
+    public PuzzleBoardPanel(){
         super();
         this.cells = new Cell[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
         this.puzzle = new Puzzle();
@@ -146,8 +148,8 @@ public class GameBoardPanel extends JPanel {
             } finally {
                 sourceCell.paint();
             }
-            if( GameBoardPanel.this.isSolved() ){
-                JOptionPane.showMessageDialog(GameBoardPanel.this, "Você ganhou!", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
+            if( PuzzleBoardPanel.this.isSolved() ){
+                JOptionPane.showMessageDialog(PuzzleBoardPanel.this, "Você ganhou!", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }

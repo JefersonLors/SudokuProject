@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Jogo básico finalizado">
+    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Implementando os subgrides">
+      <change afterPath="$PROJECT_DIR$/src/Testes.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/sudoku/GenerateGrid.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sudoku/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/Cell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sudoku/GameBoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/GameBoardPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sudoku/GameBoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sudoku/SudokuConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/SudokuConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sudoku/SudokuMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/SudokuMain.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,9 +71,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Testes" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Testes" />
+      <module name="SudokuProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.SudokuMain" />
+        <item itemvalue="Application.Testes" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -86,7 +95,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701023606221</updated>
       <workItem from="1701023607289" duration="1916000" />
-      <workItem from="1701475719484" duration="31953000" />
+      <workItem from="1701475719484" duration="44927000" />
     </task>
     <task id="LOCAL-00001" summary="Iniciando o projeto">
       <option name="closed" value="true" />
@@ -128,7 +137,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701525434959</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Implementando os subgrides">
+      <option name="closed" value="true" />
+      <created>1701535092881</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1701535092881</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -139,6 +156,7 @@
     <MESSAGE value="Comentário teste" />
     <MESSAGE value="Criação da estrutura básica do projeto e da classe Cell" />
     <MESSAGE value="Jogo básico finalizado" />
-    <option name="LAST_COMMIT_MESSAGE" value="Jogo básico finalizado" />
+    <MESSAGE value="Implementando os subgrides" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementando os subgrides" />
   </component>
 </project>
