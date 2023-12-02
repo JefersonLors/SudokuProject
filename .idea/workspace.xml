@@ -4,14 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Iniciando o projeto" />
+    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Jogo básico finalizado">
+      <change afterPath="$PROJECT_DIR$/src/sudoku/GenerateGrid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sudoku/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sudoku/GameBoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/GameBoardPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sudoku/SudokuMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/SudokuMain.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Yj0Ie3Rw2Dhm1W3vBvlDnN2wTV" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -22,6 +40,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -30,6 +49,34 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager" selected="Application.SudokuMain">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="SudokuProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SudokuMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="sudoku.SudokuMain" />
+      <module name="SudokuProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="sudoku.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.SudokuMain" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -38,7 +85,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1701023606221</updated>
-      <workItem from="1701023607289" duration="437000" />
+      <workItem from="1701023607289" duration="1916000" />
+      <workItem from="1701475719484" duration="31953000" />
     </task>
     <task id="LOCAL-00001" summary="Iniciando o projeto">
       <option name="closed" value="true" />
@@ -48,7 +96,39 @@
       <option name="project" value="LOCAL" />
       <updated>1701023806834</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Iniciando o projeto">
+      <option name="closed" value="true" />
+      <created>1701024096857</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1701024096857</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Comentário teste">
+      <option name="closed" value="true" />
+      <created>1701029949421</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1701029949421</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Criação da estrutura básica do projeto e da classe Cell">
+      <option name="closed" value="true" />
+      <created>1701480270222</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1701480270222</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Jogo básico finalizado">
+      <option name="closed" value="true" />
+      <created>1701525434959</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1701525434959</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -56,6 +136,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Iniciando o projeto" />
-    <option name="LAST_COMMIT_MESSAGE" value="Iniciando o projeto" />
+    <MESSAGE value="Comentário teste" />
+    <MESSAGE value="Criação da estrutura básica do projeto e da classe Cell" />
+    <MESSAGE value="Jogo básico finalizado" />
+    <option name="LAST_COMMIT_MESSAGE" value="Jogo básico finalizado" />
   </component>
 </project>
