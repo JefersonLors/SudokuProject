@@ -12,7 +12,6 @@ public class Cell extends JTextField {
     int row;
     int col;
     int number;
-
     CellStatus status;
 
     public Cell( int row, int col){

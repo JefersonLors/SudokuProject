@@ -31,13 +31,87 @@ public class GameBoardPanel extends JPanel {
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
                 this.cells[row][col] = new Cell(row, col);
                 this.cells[row][col].newGame(puzzle.grid[row][col], puzzle.isGiven[row][col]);
+                this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
                 if( this.cells[row][col].isEditable() ){
                     this.cells[row][col].addActionListener(new CellInputListener());
-                    this.cells[row][col].isFocusable();
                 }
                 super.add(cells[row][col]);
             }
         }
+        this.paintSubGrid();
+    }
+    private void paintSubGrid(){
+//        for (int row = 2; row < SudokuConstants.GRID_SIZE; row += 3) {
+//            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+//                this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 1, 3, 1, Color.BLACK));
+//            }
+//        }
+//        for (int row = 0; row < SudokuConstants.GRID_SIZE; row++) {
+//            for (int col = 2; col < SudokuConstants.GRID_SIZE ; col += 3) {
+//                if( (row + 1) % 3 == 0){
+//                    this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 1, 3, 3, Color.BLACK));
+//                }else{
+//                    this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 3, Color.BLACK));
+//                }
+//            }
+//        }
+//
+//        for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+//            if( (col + 1) % 3 == 0){
+//                this.cells[0][col].setBorder(BorderFactory.createMatteBorder(3, 1, 3, 3, Color.BLACK));
+//            }else{
+//                this.cells[0][col].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 3, Color.BLACK));
+//            }
+//        }
+
+        for (int row = 0; row < SudokuConstants.GRID_SIZE; row++) {
+            for (int col = 0; col < SudokuConstants.GRID_SIZE ; col++) {
+                if( row == 0 ){
+                    if( col == 0){
+                        this.cells[row][col].setBorder(BorderFactory.createMatteBorder(3, 3, 1, 1, Color.BLACK));
+                    } else if( (col + 1) % 3 != 0 ){
+                        this.cells[row][col].setBorder(BorderFactory.createMatteBorder(3, 1, 1, 1, Color.BLACK));
+                    }
+
+                }
+                if( col == 0 ){
+                    if( row == 0){
+                        this.cells[row][col].setBorder(BorderFactory.createMatteBorder(3, 3, 1, 1, Color.BLACK));
+                    } else if( (row + 1) % 3 != 0 ){
+                        this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 3, 1, 1, Color.BLACK));
+                    }
+
+                }
+                if( row == SudokuConstants.GRID_SIZE-1 && col == 0){
+                    this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 3, 3, 1, Color.BLACK));
+                }
+                if( row == SudokuConstants.GRID_SIZE-1 && col == SudokuConstants.GRID_SIZE-1){
+                    this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 1, 3, 3, Color.BLACK));
+                }
+                if( row == 0 && col == SudokuConstants.GRID_SIZE-1){
+                    this.cells[row][col].setBorder(BorderFactory.createMatteBorder(3, 1, 1, 3, Color.BLACK));
+                }
+                if( (row + 1) % 3 == 0 ){
+                    if( col == 0 ){
+                        this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 3, 3, 1, Color.BLACK));
+                    }else if( ( col + 1 ) % 3 == 0 ){
+                        this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 1, 3, 3, Color.BLACK));
+                    }else{
+                        this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 1, 3, 1, Color.BLACK));
+                    }
+                }
+                if( (col + 1) % 3 == 0 ){
+                    if( row == 0 ){
+                        this.cells[row][col].setBorder(BorderFactory.createMatteBorder(3, 1, 1, 3, Color.BLACK));
+                    }else if( ( row + 1 ) % 3 == 0 ){
+                        this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 1, 3, 3, Color.BLACK));
+                    }else{
+                        this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 3, Color.BLACK));
+                    }
+                }
+            }
+        }
+
     }
     public boolean isSolved() {
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
@@ -72,6 +146,11 @@ public class GameBoardPanel extends JPanel {
             } finally {
                 sourceCell.paint();
             }
+            if( GameBoardPanel.this.isSolved() ){
+                JOptionPane.showMessageDialog(GameBoardPanel.this, "Você ganhou!", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }
+
+
 }

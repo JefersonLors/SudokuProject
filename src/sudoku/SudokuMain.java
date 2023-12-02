@@ -15,23 +15,20 @@ public class SudokuMain extends JFrame {
             }
         });
     }
-
     public SudokuMain(){
         super();
         this.gameBoard = new GameBoardPanel();
-        this.configScreen();
         this.newGame();
     }
-    private void configScreen(){
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setLayout(new BorderLayout());
-        //this.setSize(SudokuConstants.BOARD_WIDTH, SudokuConstants.BOARD_HEIGHT);
-        this.getContentPane().add(gameBoard, BorderLayout.CENTER);
-        this.setVisible(true);
-    }
-
     public void newGame(){
         this.gameBoard.newGame();
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
+        this.setLocation(700, 200); //Posiciona o frame na tela
+        this.setTitle("Sudoku Game");
+        //this.setSize(SudokuConstants.BOARD_WIDTH, SudokuConstants.BOARD_HEIGHT); //seta as dimensões da tela
+        this.getContentPane().add(gameBoard, BorderLayout.CENTER);
         this.pack();
+        this.setVisible(true);
     }
 }
