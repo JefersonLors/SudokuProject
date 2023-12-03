@@ -16,7 +16,6 @@ public class SudokuMain extends JFrame {
     private JRadioButton hardLevel;
     private ButtonGroup levelsGroup;
     private GameLevel gameLevel = GameLevel.NON_SELECTED;
-    private GameLevel lastGameLevel = GameLevel.NON_SELECTED;
     private JTextField screenCurrLevel;
     public static void main( String[] args ){
         EventQueue.invokeLater(() -> {
@@ -38,40 +37,26 @@ public class SudokuMain extends JFrame {
         this.restartButton = new JButton("   Restart    ");
         this.restartButton.addActionListener(e -> {
             if( gameLevel != GameLevel.NON_SELECTED ){
-//                this.getContentPane().remove(this.gameBoard);
-//                this.gameBoard.restartGame();
-//                this.getContentPane().add(this.gameBoard);
-//                revalidate();
+                this.gameBoard.restartGame();
+                revalidate();
             }
         });
 
         this.newGameButton = new JButton("   New Game   ");
         this.newGameButton.addActionListener(e -> {
+            int confirmation = 0;
             if( gameLevel == GameLevel.NON_SELECTED ){
                 JOptionPane.showMessageDialog(this, "Por favor, selecione um nível de jogo", "Aviso", JOptionPane.ERROR_MESSAGE);
             }else{
                 if( this.gameBoard.haveProgres() ){
-                    int confirmation = JOptionPane.showConfirmDialog(this,
+                    confirmation = JOptionPane.showConfirmDialog(this,
                                     "Deseja abandonar o jogo atual? Todo o seu progresso será perdido.",
                                     "Aviso", JOptionPane.YES_NO_OPTION);
-
-                    if( confirmation == 0){
-                        this.getContentPane().remove(this.gameBoard);
-                        this.gameBoard = new PuzzleBoardPanel();
-                        this.gameBoard.newGame(gameLevel);
-                        this.screenCurrLevel.setText("Level: " + (gameLevel == GameLevel.NON_SELECTED ? "" : gameLevel));
-                        this.getContentPane().add(this.gameBoard);
-                        revalidate();
-                        lastGameLevel = gameLevel;
-                    }
-                }else{
-                    this.getContentPane().remove(this.gameBoard);
-                    this.gameBoard = new PuzzleBoardPanel();
+                }
+                if( confirmation == 0 || !this.gameBoard.haveProgres() ){
                     this.gameBoard.newGame(gameLevel);
                     this.screenCurrLevel.setText("Level: " + (gameLevel == GameLevel.NON_SELECTED ? "" : gameLevel));
-                    this.getContentPane().add(this.gameBoard);
                     revalidate();
-                    lastGameLevel = gameLevel;
                 }
             }
         });

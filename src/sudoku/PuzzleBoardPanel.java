@@ -13,10 +13,10 @@ public class PuzzleBoardPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private Cell[][] cells;
     private Puzzle puzzle;
-    private ArrayList<Cell> toBlock;
+    private ArrayList<Cell> correctGuesses;
     public PuzzleBoardPanel(){
         super();
-        this.toBlock = new ArrayList<Cell>();
+        this.correctGuesses = new ArrayList<Cell>();
         this.cells = new Cell[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
         this.puzzle = new Puzzle();
         this.boardConfig();
@@ -29,6 +29,7 @@ public class PuzzleBoardPanel extends JPanel {
     private void createCellsGrid(){
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                if( cells[row][col] != null ) {super.remove(cells[row][col]);}
                 this.cells[row][col] = new Cell(row, col);
                 this.cells[row][col].setEditable(false);
                 super.add(cells[row][col]);
@@ -55,7 +56,7 @@ public class PuzzleBoardPanel extends JPanel {
         this.paintSubGrid();
     }
     public boolean haveProgres(){
-        if( this.toBlock.size() != 0){
+        if( this.correctGuesses.size() != 0){
             return true;
         }
         return false;
@@ -135,10 +136,10 @@ public class PuzzleBoardPanel extends JPanel {
                 if( numberIn >= 1 && numberIn <=9 ){
                     if( numberIn == sourceCell.number ){
                         sourceCell.status = CellStatus.CORRECT_GUESS;
-                        PuzzleBoardPanel.this.toBlock.add(sourceCell);
+                        PuzzleBoardPanel.this.correctGuesses.add(sourceCell);
                     }else{
                         sourceCell.status = CellStatus.WRONG_GUESS;
-                        PuzzleBoardPanel.this.toBlock.remove(sourceCell);
+                        PuzzleBoardPanel.this.correctGuesses.remove(sourceCell);
                     }
                 }else{
                     sourceCell.status = CellStatus.TO_GUESS;
@@ -152,7 +153,7 @@ public class PuzzleBoardPanel extends JPanel {
             }
             if( PuzzleBoardPanel.this.isSolved() ){
                 JOptionPane.showMessageDialog(PuzzleBoardPanel.this, "Você arrasou!", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
-                PuzzleBoardPanel.this.toBlock.stream().forEach( cell -> cell.setEditable(false));
+                PuzzleBoardPanel.this.correctGuesses.stream().forEach(cell -> cell.setEditable(false));
             }
         }
     }
