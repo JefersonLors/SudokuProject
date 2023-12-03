@@ -1,65 +1,102 @@
 package sudoku;
 
+import sudoku.Utils.Utils;
 import sudoku.enums.GameLevel;
 
 public class Puzzle {
     //Tabuleiro do Sudoku
-    int grid[][] = new int [SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
-
-    //Marca quais das células são dadas
+    int grid[][];
+    int sizeSquare;
     boolean isGiven[][] = new boolean [SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
 
     public Puzzle(){
         super();
+        Double squareSizeDouble = Math.sqrt(SudokuConstants.GRID_SIZE);
+        this.sizeSquare = squareSizeDouble.intValue();
     }
 
     public void newPuzzle(GameLevel level){
-        var newGrid = this.generateGrid();
-
-        for( int row = 0; row < SudokuConstants.GRID_SIZE; row++){
-            for( int col = 0; col < SudokuConstants.GRID_SIZE; col++){
-                this.grid[row][col] = newGrid[row][col];
-            }
-        }
-
-        var newIsGiven = this.generateIsGiven(level);
-
-        for( int row = 0; row < SudokuConstants.GRID_SIZE; row++){
-            for( int col = 0; col < SudokuConstants.GRID_SIZE; col++){
-                this.isGiven[row][col] = newIsGiven[row][col];
+        this.grid = new int[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
+        this.fillDiagonalBoxes();
+        this.fillRemainingBoxes(0, sizeSquare);
+        this.generateIsGiven(level);
+    }
+    private void fillDiagonalBoxes()
+    {
+        for (int i = 0; i < SudokuConstants.GRID_SIZE; i += sizeSquare){
+            for (int row = 0; row < sizeSquare; row++) {
+                for (int col = 0; col < sizeSquare; col++) {
+                    int num;
+                    do {
+                        num = Utils.randomNumberBetween(1, SudokuConstants.GRID_SIZE);
+                    } while (!checkUnusedInBox(i, i, num));
+                    grid[i + row][i + col] = num;
+                }
             }
         }
     }
-    private int[][] generateGrid(){
-        int[][] hardcodedNumbers = {{5, 3, 4, 6, 7, 8, 9, 1, 2},
-                                    {6, 7, 2, 1, 9, 5, 3, 4, 8},
-                                    {1, 9, 8, 3, 4, 2, 5, 6, 7},
-                                    {8, 5, 9, 7, 6, 1, 4, 2, 3},
-                                    {4, 2, 6, 8, 5, 3, 7, 9, 1},
-                                    {7, 1, 3, 9, 2, 4, 8, 5, 6},
-                                    {9, 6, 1, 5, 3, 7, 2, 8, 4},
-                                    {2, 8, 7, 4, 1, 9, 6, 3, 5},
-                                    {3, 4, 5, 2, 8, 6, 1, 7, 9}};
 
-//        int hardcodedNumbers[][] = new int[9][9];
-//
-//        Random random = new Random();
-//
-//        for( int pos = 0; pos < SudokuConstants.GRID_SIZE; pos++){
-//            hardcodedNumbers[pos][pos] = random.nextInt(9) + 1;
-//        }
-//
-//        for( int row = 0; row < SudokuConstants.GRID_SIZE; row++){
-//            for( int col = 0; col < SudokuConstants.GRID_SIZE; col++){
-//                System.out.print( (col == 8 ? hardcodedNumbers[row][col] + "\n" : hardcodedNumbers[row][col] + "  "));
-//            }
-//        }
-
-        return hardcodedNumbers;
+    private boolean checkUnusedInBox(int rowStart, int colStart, int num)
+    {
+        for (int row = 0; row < sizeSquare; row++){
+            for (int col = 0; col < sizeSquare; col++){
+                if (grid[rowStart+row][colStart+col]==num){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
-    private boolean[][] generateIsGiven( GameLevel level){
-        boolean hardcodedIsGiven[][] = {{true, true, true, true, true, false, true, true, true},
-                                        {true, true, true, true, true, true, true, true, false},
+    private boolean CheckIfSafe(int row, int col, int num)
+    {
+        return (checkUnusedInRow(row, num) &&
+                checkUnusedInCol(col, num) &&
+                checkUnusedInBox(row-row % sizeSquare, col-col% sizeSquare, num));
+    }
+    private boolean checkUnusedInRow(int row, int num)
+    {
+        for (int col = 0; col < SudokuConstants.GRID_SIZE; col++)
+            if (grid[row][col] == num)
+                return false;
+        return true;
+    }
+    private boolean checkUnusedInCol(int col, int num)
+    {
+        for (int row = 0; row < SudokuConstants.GRID_SIZE; row++)
+            if (grid[row][col] == num)
+                return false;
+        return true;
+    }
+    private boolean fillRemainingBoxes(int row, int col) {
+        if (col >= SudokuConstants.GRID_SIZE && ++row < SudokuConstants.GRID_SIZE){
+            col = 0;
+        }
+        if (row >= SudokuConstants.GRID_SIZE && col >= SudokuConstants.GRID_SIZE){
+            return true;
+        }
+        if (row < sizeSquare && col < sizeSquare){
+            col = sizeSquare;
+        } else if (row < SudokuConstants.GRID_SIZE - sizeSquare && col == (int) (row / sizeSquare) * sizeSquare){
+            col += sizeSquare;
+        } else if (row >= SudokuConstants.GRID_SIZE - sizeSquare && col == SudokuConstants.GRID_SIZE - sizeSquare) {
+            row++;
+            col = 0;
+            if (row >= SudokuConstants.GRID_SIZE)
+                return true;
+        }
+        for (int num = 1; num <= SudokuConstants.GRID_SIZE; num++) {
+            if (CheckIfSafe(row, col, num)) {
+                grid[row][col] = num;
+                if (fillRemainingBoxes(row, col + 1))
+                    return true;
+                grid[row][col] = 0;
+            }
+        }
+        return false;
+    }
+    private void generateIsGiven( GameLevel level ){
+        boolean hardcodedIsGiven[][] = {{true, true, true, true, true, true, true, true, true},
+                                        {true, true, true, true, true, true, true, true, true},
                                         {true, true, true, true, true, true, true, true, true},
                                         {true, true, true, true, true, true, true, true, true},
                                         {true, true, true, true, true, true, true, true, true},
@@ -67,6 +104,21 @@ public class Puzzle {
                                         {true, true, true, true, true, true, true, true, true},
                                         {true, true, true, true, true, true, true, true, true},
                                         {true, true, true, true, true, true, true, true, true}};
-        return hardcodedIsGiven;
+
+        this.generateToGuess( hardcodedIsGiven, level.getValue() );
+
+        for( int row = 0; row < SudokuConstants.GRID_SIZE; row++){
+            for( int col = 0; col < SudokuConstants.GRID_SIZE; col++){
+                this.isGiven[row][col] = hardcodedIsGiven[row][col];
+            }
+        }
+    }
+    private void generateToGuess ( boolean[][] hardCodIsGiven, int qty){
+        if( qty > 0 ){
+            int row = Utils.randomNumberBetween( 0, 8);
+            int col = Utils.randomNumberBetween( 0, 8);
+            hardCodIsGiven[row][col] = false;
+            generateToGuess(hardCodIsGiven, qty-1);
+        }
     }
 }
