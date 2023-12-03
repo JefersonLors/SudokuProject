@@ -37,57 +37,70 @@ public class SudokuMain extends JFrame {
         this.toolBar = new JToolBar();
         this.restartButton = new JButton("   Restart    ");
         this.restartButton.addActionListener(e -> {
-            this.getContentPane().remove(this.gameBoard);
-            this.gameBoard = new PuzzleBoardPanel();
-            this.gameBoard.newGame(lastGameLevel);
-            this.getContentPane().add(this.gameBoard);
-            revalidate();
+            if( gameLevel != GameLevel.NON_SELECTED ){
+//                this.getContentPane().remove(this.gameBoard);
+//                this.gameBoard.restartGame();
+//                this.getContentPane().add(this.gameBoard);
+//                revalidate();
+            }
         });
 
         this.newGameButton = new JButton("   New Game   ");
-        this.newGameButton.addActionListener(e->{
+        this.newGameButton.addActionListener(e -> {
             if( gameLevel == GameLevel.NON_SELECTED ){
                 JOptionPane.showMessageDialog(this, "Por favor, selecione um nível de jogo", "Aviso", JOptionPane.ERROR_MESSAGE);
             }else{
-                this.getContentPane().remove(this.gameBoard);
-                this.gameBoard = new PuzzleBoardPanel();
-                this.gameBoard.newGame(gameLevel);
-                this.screenCurrLevel.setText("Level: " + gameLevel);
+                if( this.gameBoard.haveProgres() ){
+                    int confirmation = JOptionPane.showConfirmDialog(this,
+                                    "Deseja abandonar o jogo atual? Todo o seu progresso será perdido.",
+                                    "Aviso", JOptionPane.YES_NO_OPTION);
 
-                this.getContentPane().add(this.gameBoard);
-                revalidate();
-                lastGameLevel = gameLevel;
+                    if( confirmation == 0){
+                        this.getContentPane().remove(this.gameBoard);
+                        this.gameBoard = new PuzzleBoardPanel();
+                        this.gameBoard.newGame(gameLevel);
+                        this.screenCurrLevel.setText("Level: " + (gameLevel == GameLevel.NON_SELECTED ? "" : gameLevel));
+                        this.getContentPane().add(this.gameBoard);
+                        revalidate();
+                        lastGameLevel = gameLevel;
+                    }
+                }else{
+                    this.getContentPane().remove(this.gameBoard);
+                    this.gameBoard = new PuzzleBoardPanel();
+                    this.gameBoard.newGame(gameLevel);
+                    this.screenCurrLevel.setText("Level: " + (gameLevel == GameLevel.NON_SELECTED ? "" : gameLevel));
+                    this.getContentPane().add(this.gameBoard);
+                    revalidate();
+                    lastGameLevel = gameLevel;
+                }
             }
         });
 
         this.easyLevel = new JRadioButton("easy");
         this.easyLevel.addActionListener(e->{
             gameLevel = GameLevel.EASY;
-            System.out.println(gameLevel);
         });
 
         this.mediumLevel = new JRadioButton("medium");
         this.mediumLevel.addActionListener(e->{
             gameLevel = GameLevel.MEDIUM;
-            System.out.println(gameLevel);
         });
 
         this.hardLevel = new JRadioButton("hard");
         this.hardLevel.addActionListener(e->{
             gameLevel = GameLevel.HARD;
-            System.out.println(gameLevel);
         });
 
-        this.screenCurrLevel = new JTextField("Level: " + gameLevel);
+        this.screenCurrLevel = new JTextField("Level: " + (gameLevel == GameLevel.NON_SELECTED ? "" : gameLevel));
         this.screenCurrLevel.setEditable(false);
         this.screenCurrLevel.setBorder(null);
-        this.screenCurrLevel.setFont( new Font("OCR A Extend", Font.PLAIN, 15));
-        this.screenCurrLevel.setSize(90, 90);
+        this.screenCurrLevel.setFont( new Font("OCR A Extend", Font.HANGING_BASELINE, 15));
 
         this.levelsGroup = new ButtonGroup();
     }
     public void newGame(){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
         this.setLocation(700, 200); //Posiciona o frame na tela
         this.setTitle("Sudoku Game");
         this.setToolBar();
@@ -114,7 +127,7 @@ public class SudokuMain extends JFrame {
         toolBarPanel.add(this.easyLevel);
         toolBarPanel.add(this.mediumLevel);
         toolBarPanel.add(this.hardLevel);
-        toolBarPanel.add(Box.createHorizontalStrut(10));
+        toolBarPanel.add(Box.createHorizontalStrut(30));
         toolBarPanel.add(this.screenCurrLevel);
 
         this.toolBar.add(toolBarPanel);

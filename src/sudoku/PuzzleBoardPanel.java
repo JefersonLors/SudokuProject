@@ -7,16 +7,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.util.ArrayList;
 
 public class PuzzleBoardPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private Cell[][] cells;
     private Puzzle puzzle;
-
+    private ArrayList<Cell> toBlock;
     public PuzzleBoardPanel(){
         super();
+        this.toBlock = new ArrayList<Cell>();
         this.cells = new Cell[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
         this.puzzle = new Puzzle();
         this.boardConfig();
@@ -26,7 +26,6 @@ public class PuzzleBoardPanel extends JPanel {
         super.setPreferredSize(new Dimension(SudokuConstants.BOARD_WIDTH, SudokuConstants.BOARD_HEIGHT));
         super.setVisible(true);
     }
-
     private void createCellsGrid(){
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
@@ -50,49 +49,23 @@ public class PuzzleBoardPanel extends JPanel {
         this.createCellsGrid();
 
         if( level != GameLevel.NON_SELECTED){
-            System.out.println("game level dentro = " + level);
             this.puzzle.newPuzzle(level);
             this.setCellsGridValues();
         }
-
-//        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
-//            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-//                this.cells[row][col] = new Cell(row, col);
-//                this.cells[row][col].setEditable(false);
-////                if( level != GameLevel.NON_SELECTED)
-////                    this.cells[row][col].newGame(puzzle.grid[row][col], puzzle.isGiven[row][col]);
-////                if( this.cells[row][col].isEditable() ){
-////                    this.cells[row][col].addActionListener(new CellInputListener());
-////                }
-//                super.add(cells[row][col]);
-//            }
-//        }
+        this.paintSubGrid();
+    }
+    public boolean haveProgres(){
+        if( this.toBlock.size() != 0){
+            return true;
+        }
+        return false;
+    }
+    public void restartGame(){
+        this.createCellsGrid();
+        this.setCellsGridValues();
         this.paintSubGrid();
     }
     private void paintSubGrid(){
-//        for (int row = 2; row < SudokuConstants.GRID_SIZE; row += 3) {
-//            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-//                this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 1, 3, 1, Color.BLACK));
-//            }
-//        }
-//        for (int row = 0; row < SudokuConstants.GRID_SIZE; row++) {
-//            for (int col = 2; col < SudokuConstants.GRID_SIZE ; col += 3) {
-//                if( (row + 1) % 3 == 0){
-//                    this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 1, 3, 3, Color.BLACK));
-//                }else{
-//                    this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 3, Color.BLACK));
-//                }
-//            }
-//        }
-//
-//        for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-//            if( (col + 1) % 3 == 0){
-//                this.cells[0][col].setBorder(BorderFactory.createMatteBorder(3, 1, 3, 3, Color.BLACK));
-//            }else{
-//                this.cells[0][col].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 3, Color.BLACK));
-//            }
-//        }
-
         for (int row = 0; row < SudokuConstants.GRID_SIZE; row++) {
             for (int col = 0; col < SudokuConstants.GRID_SIZE ; col++) {
                 this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
@@ -102,7 +75,6 @@ public class PuzzleBoardPanel extends JPanel {
                     } else if( (col + 1) % 3 != 0 ){
                         this.cells[row][col].setBorder(BorderFactory.createMatteBorder(3, 1, 1, 1, Color.BLACK));
                     }
-
                 }
                 if( col == 0 ){
                     if( row == 0){
@@ -110,7 +82,6 @@ public class PuzzleBoardPanel extends JPanel {
                     } else if( (row + 1) % 3 != 0 ){
                         this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 3, 1, 1, Color.BLACK));
                     }
-
                 }
                 if( row == SudokuConstants.GRID_SIZE-1 && col == 0){
                     this.cells[row][col].setBorder(BorderFactory.createMatteBorder(1, 3, 3, 1, Color.BLACK));
@@ -141,7 +112,6 @@ public class PuzzleBoardPanel extends JPanel {
                 }
             }
         }
-
     }
     public boolean isSolved() {
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
@@ -165,22 +135,26 @@ public class PuzzleBoardPanel extends JPanel {
                 if( numberIn >= 1 && numberIn <=9 ){
                     if( numberIn == sourceCell.number ){
                         sourceCell.status = CellStatus.CORRECT_GUESS;
+                        PuzzleBoardPanel.this.toBlock.add(sourceCell);
                     }else{
                         sourceCell.status = CellStatus.WRONG_GUESS;
+                        PuzzleBoardPanel.this.toBlock.remove(sourceCell);
                     }
                 }else{
+                    sourceCell.status = CellStatus.TO_GUESS;
                     sourceCell.setText("");
                 }
             }catch( Exception ex ){
+                sourceCell.status = CellStatus.TO_GUESS;
                 sourceCell.setText("");
             } finally {
                 sourceCell.paint();
             }
             if( PuzzleBoardPanel.this.isSolved() ){
-                JOptionPane.showMessageDialog(PuzzleBoardPanel.this, "Você ganhou!", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(PuzzleBoardPanel.this, "Você arrasou!", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
+                PuzzleBoardPanel.this.toBlock.stream().forEach( cell -> cell.setEditable(false));
             }
         }
     }
-
 
 }
