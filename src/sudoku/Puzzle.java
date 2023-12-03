@@ -1,5 +1,7 @@
 package sudoku;
 
+import jdk.jshell.execution.Util;
+import sudoku.Utils.Utils;
 import sudoku.enums.GameLevel;
 
 public class Puzzle {
@@ -58,8 +60,8 @@ public class Puzzle {
         return hardcodedNumbers;
     }
     private boolean[][] generateIsGiven( GameLevel level){
-        boolean hardcodedIsGiven[][] = {{true, true, true, true, true, false, true, true, true},
-                                        {true, true, true, true, true, true, true, true, false},
+        boolean hardcodedIsGiven[][] = {{true, true, true, true, true, true, true, true, true},
+                                        {true, true, true, true, true, true, true, true, true},
                                         {true, true, true, true, true, true, true, true, true},
                                         {true, true, true, true, true, true, true, true, true},
                                         {true, true, true, true, true, true, true, true, true},
@@ -67,6 +69,21 @@ public class Puzzle {
                                         {true, true, true, true, true, true, true, true, true},
                                         {true, true, true, true, true, true, true, true, true},
                                         {true, true, true, true, true, true, true, true, true}};
+        if( level == GameLevel.EASY ){
+            this.generateToGuess( hardcodedIsGiven, 20 );
+        }else if ( level == GameLevel.MEDIUM ){
+            this.generateToGuess( hardcodedIsGiven, 50 );
+        }else if ( level == GameLevel.HARD ){
+            this.generateToGuess( hardcodedIsGiven, 70 );
+        }
         return hardcodedIsGiven;
+    }
+    private void generateToGuess ( boolean[][] hardCodIsGiven, int qty){
+        if( qty > 0 ){
+            int row = Utils.randomNumberBetween( 0, 8);
+            int col = Utils.randomNumberBetween( 0, 8);
+            hardCodIsGiven[row][col] = false;
+            generateToGuess(hardCodIsGiven, qty-1);
+        }
     }
 }
