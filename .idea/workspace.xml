@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Finalização da lógica dos botões.">
+    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Criação do gerador de level">
       <change afterPath="$PROJECT_DIR$/src/Testes.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/sudoku/GenerateGrid.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sudoku/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/Puzzle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sudoku/enums/GameLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/enums/GameLevel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +95,7 @@
       <updated>1701023606221</updated>
       <workItem from="1701023607289" duration="1916000" />
       <workItem from="1701475719484" duration="58353000" />
-      <workItem from="1701609274281" duration="7272000" />
+      <workItem from="1701609274281" duration="8311000" />
     </task>
     <task id="LOCAL-00001" summary="Iniciando o projeto">
       <option name="closed" value="true" />
@@ -184,7 +185,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701616777070</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Criação do gerador de level">
+      <option name="closed" value="true" />
+      <created>1701618146028</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1701618146028</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -201,7 +210,8 @@
     <MESSAGE value="Adicionando identificador de nível atual" />
     <MESSAGE value="Correção de cores e ajuste no botão New Game" />
     <MESSAGE value="Finalização da lógica dos botões." />
-    <option name="LAST_COMMIT_MESSAGE" value="Finalização da lógica dos botões." />
+    <MESSAGE value="Criação do gerador de level" />
+    <option name="LAST_COMMIT_MESSAGE" value="Criação do gerador de level" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

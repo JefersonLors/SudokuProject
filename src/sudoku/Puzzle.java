@@ -1,6 +1,5 @@
 package sudoku;
 
-import jdk.jshell.execution.Util;
 import sudoku.Utils.Utils;
 import sudoku.enums.GameLevel;
 
@@ -69,13 +68,7 @@ public class Puzzle {
                                         {true, true, true, true, true, true, true, true, true},
                                         {true, true, true, true, true, true, true, true, true},
                                         {true, true, true, true, true, true, true, true, true}};
-        if( level == GameLevel.EASY ){
-            this.generateToGuess( hardcodedIsGiven, 20 );
-        }else if ( level == GameLevel.MEDIUM ){
-            this.generateToGuess( hardcodedIsGiven, 50 );
-        }else if ( level == GameLevel.HARD ){
-            this.generateToGuess( hardcodedIsGiven, 70 );
-        }
+        this.generateToGuess( hardcodedIsGiven, level.getValue() );
         return hardcodedIsGiven;
     }
     private void generateToGuess ( boolean[][] hardCodIsGiven, int qty){
