@@ -47,6 +47,7 @@ public class PuzzleBoardPanel extends JPanel {
         }
     }
     public void newGame(GameLevel level){
+        this.correctGuesses = new ArrayList<>();
         this.createCellsGrid();
 
         if( level != GameLevel.NON_SELECTED){

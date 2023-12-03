@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Criação do gerador de level">
-      <change afterPath="$PROJECT_DIR$/src/Testes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sudoku/GenerateGrid.java" afterDir="false" />
+    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Aplicação completa e funcionando.">
+      <change afterPath="$PROJECT_DIR$/src/sudoku/Sudoku.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sudoku/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/Puzzle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sudoku/enums/GameLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/enums/GameLevel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,13 +48,6 @@
   }
 }</component>
   <component name="RunManager" selected="Application.SudokuMain">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="SudokuProject" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="SudokuMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="sudoku.SudokuMain" />
       <module name="SudokuProject" />
@@ -81,7 +72,6 @@
       <list>
         <item itemvalue="Application.SudokuMain" />
         <item itemvalue="Application.Testes" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -95,7 +85,7 @@
       <updated>1701023606221</updated>
       <workItem from="1701023607289" duration="1916000" />
       <workItem from="1701475719484" duration="58353000" />
-      <workItem from="1701609274281" duration="8311000" />
+      <workItem from="1701609274281" duration="16179000" />
     </task>
     <task id="LOCAL-00001" summary="Iniciando o projeto">
       <option name="closed" value="true" />
@@ -193,7 +183,23 @@
       <option name="project" value="LOCAL" />
       <updated>1701618146028</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Correção do enum de nível">
+      <option name="closed" value="true" />
+      <created>1701619195711</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1701619195711</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Aplicação completa e funcionando.">
+      <option name="closed" value="true" />
+      <created>1701626072239</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1701626072239</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,17 +217,8 @@
     <MESSAGE value="Correção de cores e ajuste no botão New Game" />
     <MESSAGE value="Finalização da lógica dos botões." />
     <MESSAGE value="Criação do gerador de level" />
-    <option name="LAST_COMMIT_MESSAGE" value="Criação do gerador de level" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/sudoku/SudokuMain.java</url>
-          <line>99</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Correção do enum de nível" />
+    <MESSAGE value="Aplicação completa e funcionando." />
+    <option name="LAST_COMMIT_MESSAGE" value="Aplicação completa e funcionando." />
   </component>
 </project>
