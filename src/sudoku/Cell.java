@@ -3,7 +3,6 @@ package sudoku;
 import sudoku.enums.CellStatus;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Cell extends JTextField {
     private static final long serialVersionUID = 1L;
@@ -24,6 +23,28 @@ public class Cell extends JTextField {
         super.setHorizontalAlignment(JTextField.CENTER);
         super.setFont(SudokuConstants.FONT_NUMBERS);
     }
+    public void setColorCell(int number ){
+        switch (number){
+            case 1: this.setBackground(SudokuConstants.BG_NUMBER_ONE);
+                break;
+            case 2: this.setBackground(SudokuConstants.BG_NUMBER_TWO);
+                break;
+            case 3: this.setBackground(SudokuConstants.BG_NUMBER_TREE);
+                break;
+            case 4: this.setBackground(SudokuConstants.BG_NUMBER_FOR);
+                break;
+            case 5: this.setBackground(SudokuConstants.BG_NUMBER_FIVE);
+                break;
+            case 6: this.setBackground(SudokuConstants.BG_NUMBER_SIX);
+                break;
+            case 7: this.setBackground(SudokuConstants.BG_NUMBER_SEVEN);
+                break;
+            case 8: this.setBackground(SudokuConstants.BG_NUMBER_EIGTH);
+                break;
+            case 9: this.setBackground(SudokuConstants.BG_NUMBER_NINE);
+                break;
+        }
+    }
 
     //Configura a célula quando o jogo inicia
     public void newGame( int number, boolean isGiven ){
@@ -34,20 +55,22 @@ public class Cell extends JTextField {
 
     //Seta a cor da célula conforme o status dela
     public void paint(){
+        super.setBackground(SudokuConstants.BG_TO_GUESS);
+        this.setForeground(SudokuConstants.FG_GIVEN);
+
         if( this.status == CellStatus.GIVEN){
             super.setText(number + "");
             super.setEditable(false);
-            super.setBackground(SudokuConstants.BG_GIVEN);
-            super.setForeground(SudokuConstants.FG_GIVEN);
+            this.setColorCell(this.number);
         }else if( this.status == CellStatus.TO_GUESS){
             super.setText("");
             super.setEditable(true);
-            super.setBackground(SudokuConstants.BG_TO_GUESS);
-            super.setForeground(SudokuConstants.FG_NOT_GIVEN);
         }else if( this.status == CellStatus.CORRECT_GUESS){
-            super.setBackground(SudokuConstants.BG_CORRECT_GUESS);
+            //this.setColorCell(this.number);
+            this.setForeground(SudokuConstants.FG_CORRECT_GUESS);
+
         }else if( this.status == CellStatus.WRONG_GUESS){
-            super.setBackground(SudokuConstants.BG_WRONG_GUESS);
+            super.setForeground(SudokuConstants.FG_WRONG_GUESS);
         }
     }
 }
