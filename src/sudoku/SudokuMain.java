@@ -17,7 +17,7 @@ public class SudokuMain extends JFrame {
     private ButtonGroup levelsGroup;
     private GameLevel gameLevel = GameLevel.NON_SELECTED;
     private GameLevel lastGameLevel = GameLevel.NON_SELECTED;
-
+    private JTextField screenCurrLevel;
     public static void main( String[] args ){
         EventQueue.invokeLater(() -> {
             try {
@@ -33,7 +33,6 @@ public class SudokuMain extends JFrame {
         this.newGame();
     }
     private void inicializeComponents(){
-
         this.gameBoard = new PuzzleBoardPanel();
         this.toolBar = new JToolBar();
         this.restartButton = new JButton("   Restart    ");
@@ -53,6 +52,8 @@ public class SudokuMain extends JFrame {
                 this.getContentPane().remove(this.gameBoard);
                 this.gameBoard = new PuzzleBoardPanel();
                 this.gameBoard.newGame(gameLevel);
+                this.screenCurrLevel.setText("Level: " + gameLevel);
+
                 this.getContentPane().add(this.gameBoard);
                 revalidate();
                 lastGameLevel = gameLevel;
@@ -77,6 +78,12 @@ public class SudokuMain extends JFrame {
             System.out.println(gameLevel);
         });
 
+        this.screenCurrLevel = new JTextField("Level: " + gameLevel);
+        this.screenCurrLevel.setEditable(false);
+        this.screenCurrLevel.setBorder(null);
+        this.screenCurrLevel.setFont( new Font("OCR A Extend", Font.PLAIN, 15));
+        this.screenCurrLevel.setSize(90, 90);
+
         this.levelsGroup = new ButtonGroup();
     }
     public void newGame(){
@@ -92,22 +99,26 @@ public class SudokuMain extends JFrame {
 
     }
     private void setToolBar(){
-        //ADICIONAR UMA LABEL COM O NIVEL ATUAL
-        this.toolBar.setVisible(true);
+        JPanel toolBarPanel =  new JPanel();
+        toolBarPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        toolBarPanel.add(this.restartButton);
 
-        this.toolBar.add(this.restartButton);
-        this.toolBar.add(Box.createHorizontalStrut(50));
-        this.toolBar.add(this.newGameButton);
-        this.toolBar.add(Box.createHorizontalStrut(25));
+        toolBarPanel.add(this.restartButton);
+        toolBarPanel.add(Box.createHorizontalStrut(10));
+        toolBarPanel.add(this.newGameButton);
 
         this.levelsGroup.add(this.easyLevel);
         this.levelsGroup.add(this.mediumLevel);
         this.levelsGroup.add(this.hardLevel);
 
-        this.toolBar.add(this.easyLevel);
-        this.toolBar.add(this.mediumLevel);
-        this.toolBar.add(this.hardLevel);
+        toolBarPanel.add(this.easyLevel);
+        toolBarPanel.add(this.mediumLevel);
+        toolBarPanel.add(this.hardLevel);
+        toolBarPanel.add(Box.createHorizontalStrut(10));
+        toolBarPanel.add(this.screenCurrLevel);
 
+        this.toolBar.add(toolBarPanel);
+        this.toolBar.setVisible(true);
         this.getContentPane().add(this.toolBar, BorderLayout.NORTH);
     }
 }
