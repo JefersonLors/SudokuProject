@@ -5,8 +5,8 @@ import sudoku.enums.GameLevel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class PuzzleBoardPanel extends JPanel {
@@ -41,7 +41,7 @@ public class PuzzleBoardPanel extends JPanel {
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
                 this.cells[row][col].newGame(puzzle.grid[row][col], puzzle.isGiven[row][col]);
                 if( this.cells[row][col].isEditable() ){
-                    this.cells[row][col].addActionListener(new CellInputListener());
+                    this.cells[row][col].addKeyListener(new CellInputListener());
                 }
             }
         }
@@ -126,9 +126,13 @@ public class PuzzleBoardPanel extends JPanel {
         }
         return true;
     }
-    private class CellInputListener implements ActionListener {
+    private class CellInputListener implements KeyListener {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void keyTyped(KeyEvent e) {
+            this.keyPressed(e);
+        }
+        @Override
+        public void keyPressed(KeyEvent e) {
             Cell sourceCell = (Cell) e.getSource();
 
             try{
@@ -157,6 +161,9 @@ public class PuzzleBoardPanel extends JPanel {
                 PuzzleBoardPanel.this.correctGuesses.stream().forEach(cell -> cell.setEditable(false));
             }
         }
+        @Override
+        public void keyReleased(KeyEvent e) {
+            this.keyPressed(e);
+        }
     }
-
 }

@@ -4,7 +4,6 @@ import sudoku.Utils.Utils;
 import sudoku.enums.GameLevel;
 
 public class Puzzle {
-    //Tabuleiro do Sudoku
     int grid[][];
     int sizeSquare;
     boolean isGiven[][] = new boolean [SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
