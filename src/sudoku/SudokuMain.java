@@ -88,6 +88,7 @@ public class SudokuMain extends JFrame {
         this.setResizable(false);
         this.setLocation(700, 200); //Posiciona o frame na tela
         this.setTitle("Sudoku Game");
+        this.setIconImage(new ImageIcon("src/sudoku/images/sudoku.png").getImage());
         this.setToolBar();
         this.gameBoard.newGame(gameLevel);
         this.getContentPane().add(this.gameBoard, BorderLayout.CENTER);
