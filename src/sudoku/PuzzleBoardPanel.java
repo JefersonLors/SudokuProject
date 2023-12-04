@@ -47,7 +47,7 @@ public class PuzzleBoardPanel extends JPanel {
         }
     }
     public void newGame(GameLevel level){
-        this.correctGuesses = new ArrayList<>();
+        this.correctGuesses.clear();
         this.createCellsGrid();
 
         if( level != GameLevel.NON_SELECTED){
@@ -66,6 +66,7 @@ public class PuzzleBoardPanel extends JPanel {
         this.createCellsGrid();
         this.setCellsGridValues();
         this.paintSubGrid();
+        this.correctGuesses.clear();
     }
     private void paintSubGrid(){
         for (int row = 0; row < SudokuConstants.GRID_SIZE; row++) {

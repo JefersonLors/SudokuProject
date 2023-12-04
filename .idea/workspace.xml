@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Ajustes no nível. Projeto funcionando.">
+    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Corrigindo bug do progresso p2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sudoku/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/Puzzle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sudoku/SudokuConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/SudokuConstants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +87,7 @@
       <workItem from="1701023607289" duration="1916000" />
       <workItem from="1701475719484" duration="58353000" />
       <workItem from="1701609274281" duration="18007000" />
-      <workItem from="1701648820102" duration="2592000" />
+      <workItem from="1701648820102" duration="4549000" />
     </task>
     <task id="LOCAL-00001" summary="Iniciando o projeto">
       <option name="closed" value="true" />
@@ -216,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701649040352</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Substituindo ActionListener das celulars pelo KeyListener">
+      <option name="closed" value="true" />
+      <created>1701651892453</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1701651892453</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -238,6 +247,19 @@
     <MESSAGE value="Aplicação completa e funcionando." />
     <MESSAGE value="Correção do bug do progresso" />
     <MESSAGE value="Ajustes no nível. Projeto funcionando." />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajustes no nível. Projeto funcionando." />
+    <MESSAGE value="Substituindo ActionListener das celulars pelo KeyListener" />
+    <MESSAGE value="Corrigindo bug do progresso p2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Corrigindo bug do progresso p2" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java</url>
+          <line>59</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
