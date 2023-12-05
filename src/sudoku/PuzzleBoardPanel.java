@@ -16,11 +16,13 @@ public class PuzzleBoardPanel extends JPanel {
     private Puzzle puzzle;
     private ArrayList<Cell> correctGuesses;
     private StatusGame statusGame;
+    private int errors;
     public PuzzleBoardPanel(){
         super();
         this.correctGuesses = new ArrayList<Cell>();
         this.cells = new Cell[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
         this.puzzle = new Puzzle();
+        this.errors = 0;
         this.boardConfig();
     }
     private void boardConfig(){
@@ -51,7 +53,7 @@ public class PuzzleBoardPanel extends JPanel {
     public void newGame(GameLevel level){
         this.correctGuesses.clear();
         this.createCellsGrid();
-
+        this.errors = 0;
         if( level != GameLevel.NON_SELECTED){
             this.puzzle.newPuzzle(level);
             this.setCellsGridValues();
@@ -81,7 +83,11 @@ public class PuzzleBoardPanel extends JPanel {
     public StatusGame getStatusGame(){
         return this.statusGame;
     }
+    public int getErrorsAmount(){
+        return this.errors;
+    }
     public void restartGame(){
+        this.errors = 0;
         this.createCellsGrid();
         this.setCellsGridValues();
         this.paintSubGrid();
@@ -164,6 +170,7 @@ public class PuzzleBoardPanel extends JPanel {
                         PuzzleBoardPanel.this.correctGuesses.add(sourceCell);
                     }else{
                         sourceCell.status = CellStatus.WRONG_GUESS;
+                        PuzzleBoardPanel.this.errors++;
                         PuzzleBoardPanel.this.correctGuesses.remove(sourceCell);
                     }
                 }else{
