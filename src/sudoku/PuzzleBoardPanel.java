@@ -2,11 +2,12 @@ package sudoku;
 
 import sudoku.enums.CellStatus;
 import sudoku.enums.GameLevel;
+import sudoku.enums.StatusGame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class PuzzleBoardPanel extends JPanel {
@@ -14,11 +15,14 @@ public class PuzzleBoardPanel extends JPanel {
     private Cell[][] cells;
     private Puzzle puzzle;
     private ArrayList<Cell> correctGuesses;
+    private StatusGame statusGame;
+    private int errors;
     public PuzzleBoardPanel(){
         super();
         this.correctGuesses = new ArrayList<Cell>();
         this.cells = new Cell[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
         this.puzzle = new Puzzle();
+        this.errors = 0;
         this.boardConfig();
     }
     private void boardConfig(){
@@ -41,18 +45,19 @@ public class PuzzleBoardPanel extends JPanel {
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
                 this.cells[row][col].newGame(puzzle.grid[row][col], puzzle.isGiven[row][col]);
                 if( this.cells[row][col].isEditable() ){
-                    this.cells[row][col].addActionListener(new CellInputListener());
+                    this.cells[row][col].addKeyListener(new CellInputListener());
                 }
             }
         }
     }
     public void newGame(GameLevel level){
-        this.correctGuesses = new ArrayList<>();
+        this.correctGuesses.clear();
         this.createCellsGrid();
-
+        this.errors = 0;
         if( level != GameLevel.NON_SELECTED){
             this.puzzle.newPuzzle(level);
             this.setCellsGridValues();
+            this.statusGame = StatusGame.PLAYING;
         }
         this.paintSubGrid();
     }
@@ -62,10 +67,31 @@ public class PuzzleBoardPanel extends JPanel {
         }
         return false;
     }
+    public StatusGame setPause(){
+        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                if( !this.puzzle.isGiven[row][col] && this.statusGame == StatusGame.PLAYING){
+                    this.cells[row][col].setEditable(false);
+                }else if( !this.puzzle.isGiven[row][col] && this.statusGame == StatusGame.PAUSED){
+                    this.cells[row][col].setEditable(true);
+                }
+            }
+        }
+        this.statusGame = ( this.statusGame == StatusGame.PLAYING ? StatusGame.PAUSED : StatusGame.PLAYING);
+        return this.statusGame;
+    }
+    public StatusGame getStatusGame(){
+        return this.statusGame;
+    }
+    public int getErrorsAmount(){
+        return this.errors;
+    }
     public void restartGame(){
+        this.errors = 0;
         this.createCellsGrid();
         this.setCellsGridValues();
         this.paintSubGrid();
+        this.correctGuesses.clear();
     }
     private void paintSubGrid(){
         for (int row = 0; row < SudokuConstants.GRID_SIZE; row++) {
@@ -126,9 +152,13 @@ public class PuzzleBoardPanel extends JPanel {
         }
         return true;
     }
-    private class CellInputListener implements ActionListener {
+    private class CellInputListener implements KeyListener {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void keyTyped(KeyEvent e) {
+            this.keyPressed(e);
+        }
+        @Override
+        public void keyPressed(KeyEvent e) {
             Cell sourceCell = (Cell) e.getSource();
 
             try{
@@ -140,6 +170,7 @@ public class PuzzleBoardPanel extends JPanel {
                         PuzzleBoardPanel.this.correctGuesses.add(sourceCell);
                     }else{
                         sourceCell.status = CellStatus.WRONG_GUESS;
+                        PuzzleBoardPanel.this.errors++;
                         PuzzleBoardPanel.this.correctGuesses.remove(sourceCell);
                     }
                 }else{
@@ -157,6 +188,9 @@ public class PuzzleBoardPanel extends JPanel {
                 PuzzleBoardPanel.this.correctGuesses.stream().forEach(cell -> cell.setEditable(false));
             }
         }
+        @Override
+        public void keyReleased(KeyEvent e) {
+            this.keyPressed(e);
+        }
     }
-
 }

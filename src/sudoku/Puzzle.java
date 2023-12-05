@@ -4,28 +4,22 @@ import sudoku.Utils.Utils;
 import sudoku.enums.GameLevel;
 
 public class Puzzle {
-    //Tabuleiro do Sudoku
     int grid[][];
-    int sizeSquare;
     boolean isGiven[][] = new boolean [SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
-
     public Puzzle(){
         super();
-        Double squareSizeDouble = Math.sqrt(SudokuConstants.GRID_SIZE);
-        this.sizeSquare = squareSizeDouble.intValue();
     }
-
     public void newPuzzle(GameLevel level){
         this.grid = new int[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
         this.fillDiagonalBoxes();
-        this.fillRemainingBoxes(0, sizeSquare);
+        this.fillRemainingBoxes(0, SudokuConstants.SUBGRID_SIZE);
         this.generateIsGiven(level);
     }
     private void fillDiagonalBoxes()
     {
-        for (int i = 0; i < SudokuConstants.GRID_SIZE; i += sizeSquare){
-            for (int row = 0; row < sizeSquare; row++) {
-                for (int col = 0; col < sizeSquare; col++) {
+        for (int i = 0; i < SudokuConstants.GRID_SIZE; i += SudokuConstants.SUBGRID_SIZE){
+            for (int row = 0; row < SudokuConstants.SUBGRID_SIZE; row++) {
+                for (int col = 0; col < SudokuConstants.SUBGRID_SIZE; col++) {
                     int num;
                     do {
                         num = Utils.randomNumberBetween(1, SudokuConstants.GRID_SIZE);
@@ -35,11 +29,10 @@ public class Puzzle {
             }
         }
     }
-
     private boolean checkUnusedInBox(int rowStart, int colStart, int num)
     {
-        for (int row = 0; row < sizeSquare; row++){
-            for (int col = 0; col < sizeSquare; col++){
+        for (int row = 0; row < SudokuConstants.SUBGRID_SIZE; row++){
+            for (int col = 0; col < SudokuConstants.SUBGRID_SIZE; col++){
                 if (grid[rowStart+row][colStart+col]==num){
                     return false;
                 }
@@ -51,7 +44,7 @@ public class Puzzle {
     {
         return (checkUnusedInRow(row, num) &&
                 checkUnusedInCol(col, num) &&
-                checkUnusedInBox(row-row % sizeSquare, col-col% sizeSquare, num));
+                checkUnusedInBox(row-row % SudokuConstants.SUBGRID_SIZE, col-col% SudokuConstants.SUBGRID_SIZE, num));
     }
     private boolean checkUnusedInRow(int row, int num)
     {
@@ -74,11 +67,11 @@ public class Puzzle {
         if (row >= SudokuConstants.GRID_SIZE && col >= SudokuConstants.GRID_SIZE){
             return true;
         }
-        if (row < sizeSquare && col < sizeSquare){
-            col = sizeSquare;
-        } else if (row < SudokuConstants.GRID_SIZE - sizeSquare && col == (int) (row / sizeSquare) * sizeSquare){
-            col += sizeSquare;
-        } else if (row >= SudokuConstants.GRID_SIZE - sizeSquare && col == SudokuConstants.GRID_SIZE - sizeSquare) {
+        if (row < SudokuConstants.SUBGRID_SIZE && col < SudokuConstants.SUBGRID_SIZE){
+            col = SudokuConstants.SUBGRID_SIZE;
+        } else if (row < SudokuConstants.GRID_SIZE - SudokuConstants.SUBGRID_SIZE && col == (int) (row / SudokuConstants.SUBGRID_SIZE) * SudokuConstants.SUBGRID_SIZE){
+            col += SudokuConstants.SUBGRID_SIZE;
+        } else if (row >= SudokuConstants.GRID_SIZE - SudokuConstants.SUBGRID_SIZE && col == SudokuConstants.GRID_SIZE - SudokuConstants.SUBGRID_SIZE) {
             row++;
             col = 0;
             if (row >= SudokuConstants.GRID_SIZE)

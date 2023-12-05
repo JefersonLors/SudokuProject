@@ -1,6 +1,7 @@
 package sudoku;
 
 import sudoku.enums.GameLevel;
+import sudoku.enums.StatusGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,15 +9,24 @@ import java.awt.*;
 public class SudokuMain extends JFrame {
     private static final long serialVersionUID = 1L;
     private PuzzleBoardPanel gameBoard;
-    private JToolBar toolBar;
+    private JMenuBar menuBar;
+    private JMenuBar statusBar;
     private JButton restartButton;
-    private JButton newGameButton;
-    private JRadioButton easyLevel;
-    private JRadioButton mediumLevel;
-    private JRadioButton hardLevel;
+    private JButton pauseButton;
+    private JButton start;
+    private JRadioButton easyLevelButton;
+    private JRadioButton mediumLevelButton;
+    private JRadioButton hardLevelButton;
     private ButtonGroup levelsGroup;
     private GameLevel gameLevel = GameLevel.NON_SELECTED;
+    private StatusGame statusGame = StatusGame.NON_INICIALIZED;
     private JTextField screenCurrLevel;
+    private JTextField screenStatusGame;
+    private JTextField screenErrorsAmount;
+    private JTextField screenGameTimer;
+    private int gameSeconds;
+    private int gameMinutes;
+    private Timer gameTimer;
     public static void main( String[] args ){
         EventQueue.invokeLater(() -> {
             try {
@@ -33,17 +43,40 @@ public class SudokuMain extends JFrame {
     }
     private void inicializeComponents(){
         this.gameBoard = new PuzzleBoardPanel();
-        this.toolBar = new JToolBar();
-        this.restartButton = new JButton("   Restart    ");
+        this.menuBar = new JMenuBar();
+        this.statusBar = new JMenuBar();
+
+        //Icon restart = new ImageIcon( "src/sudoku/images/restart-icon-7.png");
+        this.restartButton = new JButton( "Restart");
+        this.restartButton.setPreferredSize(new Dimension(85, 30));
         this.restartButton.addActionListener(e -> {
             if( gameLevel != GameLevel.NON_SELECTED ){
+                this.gameSeconds = 0;
                 this.gameBoard.restartGame();
+                this.startGameTimer();
+                this.startErrorCounter();
                 revalidate();
             }
         });
 
-        this.newGameButton = new JButton("   New Game   ");
-        this.newGameButton.addActionListener(e -> {
+        this.pauseButton = new JButton( "Pause");
+        this.pauseButton.setPreferredSize(new Dimension(85, 30));
+        this.pauseButton.addActionListener(e -> {
+            if( this.statusGame != StatusGame.NON_INICIALIZED){
+                this.screenStatusGame.setText("Status : " + this.gameBoard.setPause());
+                this.pauseButton.setText(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? "Continue" : "Pause");
+                this.statusGame = this.gameBoard.getStatusGame();
+                this.restartButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
+                this.start.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
+                this.easyLevelButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
+                this.mediumLevelButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
+                this.hardLevelButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
+            }
+        });
+
+        this.start = new JButton("Start");
+        this.start.setPreferredSize(new Dimension(85, 30));
+        this.start.addActionListener(e -> {
             int confirmation = 0;
             if( gameLevel == GameLevel.NON_SELECTED ){
                 JOptionPane.showMessageDialog(this, "Por favor, selecione um nível de jogo", "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -56,30 +89,49 @@ public class SudokuMain extends JFrame {
                 if( confirmation == 0 || !this.gameBoard.haveProgres() ){
                     this.gameBoard.newGame(gameLevel);
                     this.screenCurrLevel.setText("Level: " + (gameLevel == GameLevel.NON_SELECTED ? "" : gameLevel));
+                    this.restartButton.setEnabled(true);
+                    this.pauseButton.setEnabled(true);
+                    this.statusGame = StatusGame.PLAYING;
+                    this.screenStatusGame.setText("Status : " + this.statusGame);
+                    this.startGameTimer();
+                    this.startErrorCounter();
                     revalidate();
                 }
             }
         });
 
-        this.easyLevel = new JRadioButton("easy");
-        this.easyLevel.addActionListener(e->{
-            gameLevel = GameLevel.EASY;
-        });
+        this.easyLevelButton = new JRadioButton("easy");
+        this.easyLevelButton.addActionListener(e -> gameLevel = GameLevel.EASY);
 
-        this.mediumLevel = new JRadioButton("medium");
-        this.mediumLevel.addActionListener(e->{
-            gameLevel = GameLevel.MEDIUM;
-        });
+        this.mediumLevelButton = new JRadioButton("medium");
+        this.mediumLevelButton.addActionListener(e -> gameLevel = GameLevel.MEDIUM);
 
-        this.hardLevel = new JRadioButton("hard");
-        this.hardLevel.addActionListener(e->{
-            gameLevel = GameLevel.HARD;
-        });
+        this.hardLevelButton = new JRadioButton("hard");
+        this.hardLevelButton.addActionListener(e -> gameLevel = GameLevel.HARD);
 
-        this.screenCurrLevel = new JTextField("Level: " + (gameLevel == GameLevel.NON_SELECTED ? "" : gameLevel));
+        this.screenCurrLevel = new JTextField("Level: ");
+        this.screenCurrLevel.setPreferredSize(new Dimension(130, 20));
         this.screenCurrLevel.setEditable(false);
         this.screenCurrLevel.setBorder(null);
         this.screenCurrLevel.setFont( new Font("OCR A Extend", Font.HANGING_BASELINE, 15));
+
+        this.screenStatusGame = new JTextField("Status: " );
+        this.screenStatusGame.setPreferredSize(new Dimension(150, 20));
+        this.screenStatusGame.setEditable(false);
+        this.screenStatusGame.setBorder(null);
+        this.screenStatusGame.setFont( new Font("OCR A Extend", Font.HANGING_BASELINE, 15));
+
+        this.screenErrorsAmount = new JTextField("Errors: " + this.gameBoard.getErrorsAmount());
+        this.screenErrorsAmount.setPreferredSize(new Dimension(100, 20));
+        this.screenErrorsAmount.setEditable(false);
+        this.screenErrorsAmount.setBorder(null);
+        this.screenErrorsAmount.setFont( new Font("OCR A Extend", Font.HANGING_BASELINE, 15));
+
+        this.screenGameTimer = new JTextField("Timer: " + String.format( "%02d", this.gameMinutes ) + ":" + String.format( "%02d", this.gameSeconds));
+        this.screenGameTimer.setPreferredSize(new Dimension(110, 20));
+        this.screenGameTimer.setEditable(false);
+        this.screenGameTimer.setBorder(null);
+        this.screenGameTimer.setFont( new Font("OCR A Extend", Font.HANGING_BASELINE, 15));
 
         this.levelsGroup = new ButtonGroup();
     }
@@ -88,35 +140,80 @@ public class SudokuMain extends JFrame {
         this.setResizable(false);
         this.setLocation(700, 200); //Posiciona o frame na tela
         this.setTitle("Sudoku Game");
-        this.setToolBar();
+        this.setIconImage(new ImageIcon("src/sudoku/images/sudoku.png").getImage());
+        this.setMenuBar();
+        this.setStatusBar();
+
         this.gameBoard.newGame(gameLevel);
         this.getContentPane().add(this.gameBoard, BorderLayout.CENTER);
+        this.restartButton.setEnabled(false);
+        this.pauseButton.setEnabled(false);
         this.pack();
 //        this.setSize(SudokuConstants.BOARD_WIDTH, SudokuConstants.BOARD_HEIGHT); //seta as dimensões da tela
         this.setVisible(true);
 
     }
-    private void setToolBar(){
-        JPanel toolBarPanel =  new JPanel();
-        toolBarPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        toolBarPanel.add(this.restartButton);
+    private void setMenuBar(){
+        JPanel menuBarPanel =  new JPanel();
+        menuBarPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        toolBarPanel.add(this.restartButton);
-        toolBarPanel.add(Box.createHorizontalStrut(10));
-        toolBarPanel.add(this.newGameButton);
+        this.levelsGroup.add(this.easyLevelButton);
+        this.levelsGroup.add(this.mediumLevelButton);
+        this.levelsGroup.add(this.hardLevelButton);
 
-        this.levelsGroup.add(this.easyLevel);
-        this.levelsGroup.add(this.mediumLevel);
-        this.levelsGroup.add(this.hardLevel);
+        menuBarPanel.add(Box.createHorizontalStrut(10));
+        menuBarPanel.add(this.easyLevelButton);
+        menuBarPanel.add(this.mediumLevelButton);
+        menuBarPanel.add(this.hardLevelButton);
 
-        toolBarPanel.add(this.easyLevel);
-        toolBarPanel.add(this.mediumLevel);
-        toolBarPanel.add(this.hardLevel);
-        toolBarPanel.add(Box.createHorizontalStrut(30));
-        toolBarPanel.add(this.screenCurrLevel);
+        menuBarPanel.add(Box.createHorizontalStrut(10));
+        menuBarPanel.add(this.start);
 
-        this.toolBar.add(toolBarPanel);
-        this.toolBar.setVisible(true);
-        this.getContentPane().add(this.toolBar, BorderLayout.NORTH);
+        menuBarPanel.add(Box.createHorizontalStrut(10));
+        menuBarPanel.add(this.pauseButton);
+
+        menuBarPanel.add(Box.createHorizontalStrut(10));
+        menuBarPanel.add(this.restartButton);
+
+        this.menuBar.add(menuBarPanel);
+        this.menuBar.setVisible(true);
+        this.getContentPane().add(this.menuBar, BorderLayout.NORTH);
+    }
+    private void setStatusBar(){
+        JPanel statusBarPanel =  new JPanel();
+        statusBarPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        statusBarPanel.add(Box.createHorizontalStrut(10));
+        statusBarPanel.add(this.screenCurrLevel);
+        statusBarPanel.add(Box.createHorizontalStrut(30));
+        statusBarPanel.add(this.screenStatusGame);
+        statusBarPanel.add(Box.createHorizontalStrut(30));
+        statusBarPanel.add(this.screenErrorsAmount);
+        statusBarPanel.add(Box.createHorizontalStrut(30));
+        statusBarPanel.add(this.screenGameTimer);
+
+        this.statusBar.add(statusBarPanel);
+        this.statusBar.setVisible(true);
+
+        this.getContentPane().add(this.statusBar, BorderLayout.SOUTH);
+    }
+    private void startErrorCounter(){
+        new Timer(0, e ->  this.screenErrorsAmount.setText("Errors: " + this.gameBoard.getErrorsAmount())).start();
+    }
+    private void startGameTimer(){
+        this.gameSeconds = 0;
+        this.gameMinutes = 0;
+        if( this.gameTimer != null ){
+            this.gameTimer.restart();
+        }else{
+            this.gameTimer = new Timer(1000, e -> {
+                    if( SudokuMain.this.statusGame == StatusGame.PLAYING){
+                        this.gameSeconds = ++this.gameSeconds % 60;
+                        this.gameMinutes += (this.gameSeconds % 60 == 0 ? 1: 0);
+                        this.screenGameTimer.setText("Timer: " + String.format( "%02d", this.gameMinutes ) + ":" + String.format( "%02d", this.gameSeconds));
+                    }
+            });
+            this.gameTimer.start();
+        }
     }
 }
