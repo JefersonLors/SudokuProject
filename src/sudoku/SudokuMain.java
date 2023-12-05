@@ -25,6 +25,7 @@ public class SudokuMain extends JFrame {
     private JTextField screenErrorsAmount;
     private JTextField screenGameTimer;
     private int gameSeconds;
+    private int gameMinutes;
     private Timer gameTimer;
     public static void main( String[] args ){
         EventQueue.invokeLater(() -> {
@@ -47,7 +48,7 @@ public class SudokuMain extends JFrame {
 
         //Icon restart = new ImageIcon( "src/sudoku/images/restart-icon-7.png");
         this.restartButton = new JButton( "Restart");
-        this.restartButton.setPreferredSize(new Dimension(80, 30));
+        this.restartButton.setPreferredSize(new Dimension(85, 30));
         this.restartButton.addActionListener(e -> {
             if( gameLevel != GameLevel.NON_SELECTED ){
                 this.gameSeconds = 0;
@@ -59,10 +60,11 @@ public class SudokuMain extends JFrame {
         });
 
         this.pauseButton = new JButton( "Pause");
-        this.pauseButton.setPreferredSize(new Dimension(80, 30));
+        this.pauseButton.setPreferredSize(new Dimension(85, 30));
         this.pauseButton.addActionListener(e -> {
             if( this.statusGame != StatusGame.NON_INICIALIZED){
                 this.screenStatusGame.setText("Status : " + this.gameBoard.setPause());
+                this.pauseButton.setText(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? "Continue" : "Pause");
                 this.statusGame = this.gameBoard.getStatusGame();
                 this.restartButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
                 this.start.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
@@ -73,7 +75,7 @@ public class SudokuMain extends JFrame {
         });
 
         this.start = new JButton("Start");
-        this.start.setPreferredSize(new Dimension(80, 30));
+        this.start.setPreferredSize(new Dimension(85, 30));
         this.start.addActionListener(e -> {
             int confirmation = 0;
             if( gameLevel == GameLevel.NON_SELECTED ){
@@ -125,8 +127,8 @@ public class SudokuMain extends JFrame {
         this.screenErrorsAmount.setBorder(null);
         this.screenErrorsAmount.setFont( new Font("OCR A Extend", Font.HANGING_BASELINE, 15));
 
-        this.screenGameTimer = new JTextField("Timer: " + this.gameSeconds);
-        this.screenGameTimer.setPreferredSize(new Dimension(100, 20));
+        this.screenGameTimer = new JTextField("Timer: " + String.format( "%02d", this.gameMinutes ) + ":" + String.format( "%02d", this.gameSeconds));
+        this.screenGameTimer.setPreferredSize(new Dimension(110, 20));
         this.screenGameTimer.setEditable(false);
         this.screenGameTimer.setBorder(null);
         this.screenGameTimer.setFont( new Font("OCR A Extend", Font.HANGING_BASELINE, 15));
@@ -195,21 +197,20 @@ public class SudokuMain extends JFrame {
 
         this.getContentPane().add(this.statusBar, BorderLayout.SOUTH);
     }
-
     private void startErrorCounter(){
         new Timer(0, e ->  this.screenErrorsAmount.setText("Errors: " + this.gameBoard.getErrorsAmount())).start();
     }
     private void startGameTimer(){
         this.gameSeconds = 0;
+        this.gameMinutes = 0;
         if( this.gameTimer != null ){
             this.gameTimer.restart();
         }else{
             this.gameTimer = new Timer(1000, e -> {
                     if( SudokuMain.this.statusGame == StatusGame.PLAYING){
-                        this.screenGameTimer.setText("Timer: " + this.gameSeconds);
-                        this.gameSeconds++;
-                    }else if( SudokuMain.this.statusGame == StatusGame.PAUSED){
-                        this.screenGameTimer.setText("Timer: " + this.gameSeconds);
+                        this.gameSeconds = ++this.gameSeconds % 60;
+                        this.gameMinutes += (this.gameSeconds % 60 == 0 ? 1: 0);
+                        this.screenGameTimer.setText("Timer: " + String.format( "%02d", this.gameMinutes ) + ":" + String.format( "%02d", this.gameSeconds));
                     }
             });
             this.gameTimer.start();
