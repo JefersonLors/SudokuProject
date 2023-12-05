@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Cronometro e contador de erros implementados">
+    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Correção cronometro de jogo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sudoku/SudokuMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/SudokuMain.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -258,7 +259,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701743675174</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Correção cronometro de jogo">
+      <option name="closed" value="true" />
+      <created>1701748275082</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1701748275082</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -285,7 +294,8 @@
     <MESSAGE value="Mudando o ícone da aplicação" />
     <MESSAGE value="Adição do botão de pausa e da barra de status." />
     <MESSAGE value="Cronometro e contador de erros implementados" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cronometro e contador de erros implementados" />
+    <MESSAGE value="Correção cronometro de jogo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Correção cronometro de jogo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -299,6 +309,11 @@
           <url>file://$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java</url>
           <line>43</line>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/sudoku/SudokuMain.java</url>
+          <line>213</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

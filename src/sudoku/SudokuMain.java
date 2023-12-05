@@ -23,6 +23,7 @@ public class SudokuMain extends JFrame {
     private JTextField screenCurrLevel;
     private JTextField screenStatusGame;
     private JTextField screenErrorsAmount;
+    private JTextField screenHitsAmount;
     private JTextField screenGameTimer;
     private int gameSeconds;
     private int gameMinutes;
@@ -55,6 +56,7 @@ public class SudokuMain extends JFrame {
                 this.gameBoard.restartGame();
                 this.startGameTimer();
                 this.startErrorCounter();
+                this.startHitsCounter();
                 revalidate();
             }
         });
@@ -95,6 +97,7 @@ public class SudokuMain extends JFrame {
                     this.screenStatusGame.setText("Status : " + this.statusGame);
                     this.startGameTimer();
                     this.startErrorCounter();
+                    this.startHitsCounter();
                     revalidate();
                 }
             }
@@ -126,6 +129,12 @@ public class SudokuMain extends JFrame {
         this.screenErrorsAmount.setEditable(false);
         this.screenErrorsAmount.setBorder(null);
         this.screenErrorsAmount.setFont( new Font("OCR A Extend", Font.HANGING_BASELINE, 15));
+
+        this.screenHitsAmount = new JTextField("Hits: " + this.gameBoard.getHitsAmount());
+        this.screenHitsAmount.setPreferredSize(new Dimension(100, 20));
+        this.screenHitsAmount.setEditable(false);
+        this.screenHitsAmount.setBorder(null);
+        this.screenHitsAmount.setFont( new Font("OCR A Extend", Font.HANGING_BASELINE, 15));
 
         this.screenGameTimer = new JTextField("Timer: " + String.format( "%02d", this.gameMinutes ) + ":" + String.format( "%02d", this.gameSeconds));
         this.screenGameTimer.setPreferredSize(new Dimension(110, 20));
@@ -185,11 +194,9 @@ public class SudokuMain extends JFrame {
 
         statusBarPanel.add(Box.createHorizontalStrut(10));
         statusBarPanel.add(this.screenCurrLevel);
-        statusBarPanel.add(Box.createHorizontalStrut(30));
         statusBarPanel.add(this.screenStatusGame);
-        statusBarPanel.add(Box.createHorizontalStrut(30));
+        statusBarPanel.add(this.screenHitsAmount);
         statusBarPanel.add(this.screenErrorsAmount);
-        statusBarPanel.add(Box.createHorizontalStrut(30));
         statusBarPanel.add(this.screenGameTimer);
 
         this.statusBar.add(statusBarPanel);
@@ -199,6 +206,9 @@ public class SudokuMain extends JFrame {
     }
     private void startErrorCounter(){
         new Timer(0, e ->  this.screenErrorsAmount.setText("Errors: " + this.gameBoard.getErrorsAmount())).start();
+    }
+    private void startHitsCounter(){
+        new Timer(0, e ->  this.screenHitsAmount.setText("Hits: " + this.gameBoard.getHitsAmount())).start();
     }
     private void startGameTimer(){
         this.gameSeconds = 0;

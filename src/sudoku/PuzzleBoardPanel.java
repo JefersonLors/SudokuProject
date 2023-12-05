@@ -86,6 +86,9 @@ public class PuzzleBoardPanel extends JPanel {
     public int getErrorsAmount(){
         return this.errors;
     }
+    public int getHitsAmount(){
+        return this.correctGuesses.size();
+    }
     public void restartGame(){
         this.errors = 0;
         this.createCellsGrid();
