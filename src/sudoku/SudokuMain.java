@@ -13,7 +13,8 @@ public class SudokuMain extends JFrame {
     private JMenuBar statusBar;
     private JButton restartButton;
     private JButton pauseButton;
-    private JButton start;
+    private JButton startButton;
+    private JButton tipButton;
     private JRadioButton easyLevelButton;
     private JRadioButton mediumLevelButton;
     private JRadioButton hardLevelButton;
@@ -49,7 +50,7 @@ public class SudokuMain extends JFrame {
 
         //Icon restart = new ImageIcon( "src/sudoku/images/restart-icon-7.png");
         this.restartButton = new JButton( "Restart");
-        this.restartButton.setPreferredSize(new Dimension(85, 30));
+        this.restartButton.setPreferredSize(new Dimension(85, 20));
         this.restartButton.addActionListener(e -> {
             if( gameLevel != GameLevel.NON_SELECTED ){
                 this.gameSeconds = 0;
@@ -62,23 +63,24 @@ public class SudokuMain extends JFrame {
         });
 
         this.pauseButton = new JButton( "Pause");
-        this.pauseButton.setPreferredSize(new Dimension(85, 30));
+        this.pauseButton.setPreferredSize(new Dimension(85, 20));
         this.pauseButton.addActionListener(e -> {
             if( this.statusGame != StatusGame.NON_INICIALIZED){
                 this.screenStatusGame.setText("Status : " + this.gameBoard.setPause());
                 this.pauseButton.setText(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? "Continue" : "Pause");
                 this.statusGame = this.gameBoard.getStatusGame();
+                this.tipButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
                 this.restartButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
-                this.start.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
+                this.startButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
                 this.easyLevelButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
                 this.mediumLevelButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
                 this.hardLevelButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
             }
         });
 
-        this.start = new JButton("Start");
-        this.start.setPreferredSize(new Dimension(85, 30));
-        this.start.addActionListener(e -> {
+        this.startButton = new JButton("Start");
+        this.startButton.setPreferredSize(new Dimension(85, 20));
+        this.startButton.addActionListener(e -> {
             int confirmation = 0;
             if( gameLevel == GameLevel.NON_SELECTED ){
                 JOptionPane.showMessageDialog(this, "Por favor, selecione um nível de jogo", "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -93,6 +95,7 @@ public class SudokuMain extends JFrame {
                     this.screenCurrLevel.setText("Level: " + (gameLevel == GameLevel.NON_SELECTED ? "" : gameLevel));
                     this.restartButton.setEnabled(true);
                     this.pauseButton.setEnabled(true);
+                    this.tipButton.setEnabled(true);
                     this.statusGame = StatusGame.PLAYING;
                     this.screenStatusGame.setText("Status : " + this.statusGame);
                     this.startGameTimer();
@@ -101,6 +104,12 @@ public class SudokuMain extends JFrame {
                     revalidate();
                 }
             }
+        });
+
+        this.tipButton = new JButton("Tipo");
+        this.tipButton.setPreferredSize(new Dimension(85, 20));
+        this.tipButton.addActionListener(e -> {
+
         });
 
         this.easyLevelButton = new JRadioButton("easy");
@@ -157,6 +166,8 @@ public class SudokuMain extends JFrame {
         this.getContentPane().add(this.gameBoard, BorderLayout.CENTER);
         this.restartButton.setEnabled(false);
         this.pauseButton.setEnabled(false);
+        this.tipButton.setEnabled(false);
+
         this.pack();
 //        this.setSize(SudokuConstants.BOARD_WIDTH, SudokuConstants.BOARD_HEIGHT); //seta as dimensões da tela
         this.setVisible(true);
@@ -170,19 +181,22 @@ public class SudokuMain extends JFrame {
         this.levelsGroup.add(this.mediumLevelButton);
         this.levelsGroup.add(this.hardLevelButton);
 
-        menuBarPanel.add(Box.createHorizontalStrut(10));
+        menuBarPanel.add(Box.createHorizontalStrut(5));
         menuBarPanel.add(this.easyLevelButton);
         menuBarPanel.add(this.mediumLevelButton);
         menuBarPanel.add(this.hardLevelButton);
 
         menuBarPanel.add(Box.createHorizontalStrut(10));
-        menuBarPanel.add(this.start);
+        menuBarPanel.add(this.startButton);
 
         menuBarPanel.add(Box.createHorizontalStrut(10));
         menuBarPanel.add(this.pauseButton);
 
         menuBarPanel.add(Box.createHorizontalStrut(10));
         menuBarPanel.add(this.restartButton);
+
+        menuBarPanel.add(Box.createHorizontalStrut(10));
+        menuBarPanel.add(this.tipButton);
 
         this.menuBar.add(menuBarPanel);
         this.menuBar.setVisible(true);
