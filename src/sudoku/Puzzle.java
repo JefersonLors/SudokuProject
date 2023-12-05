@@ -6,11 +6,9 @@ import sudoku.enums.GameLevel;
 public class Puzzle {
     int grid[][];
     boolean isGiven[][] = new boolean [SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
-
     public Puzzle(){
         super();
     }
-
     public void newPuzzle(GameLevel level){
         this.grid = new int[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
         this.fillDiagonalBoxes();
@@ -31,7 +29,6 @@ public class Puzzle {
             }
         }
     }
-
     private boolean checkUnusedInBox(int rowStart, int colStart, int num)
     {
         for (int row = 0; row < SudokuConstants.SUBGRID_SIZE; row++){

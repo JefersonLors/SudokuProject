@@ -2,6 +2,7 @@ package sudoku;
 
 import sudoku.enums.CellStatus;
 import sudoku.enums.GameLevel;
+import sudoku.enums.StatusGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +15,7 @@ public class PuzzleBoardPanel extends JPanel {
     private Cell[][] cells;
     private Puzzle puzzle;
     private ArrayList<Cell> correctGuesses;
+    private StatusGame statusGame;
     public PuzzleBoardPanel(){
         super();
         this.correctGuesses = new ArrayList<Cell>();
@@ -53,6 +55,7 @@ public class PuzzleBoardPanel extends JPanel {
         if( level != GameLevel.NON_SELECTED){
             this.puzzle.newPuzzle(level);
             this.setCellsGridValues();
+            this.statusGame = StatusGame.PLAYING;
         }
         this.paintSubGrid();
     }
@@ -61,6 +64,22 @@ public class PuzzleBoardPanel extends JPanel {
             return true;
         }
         return false;
+    }
+    public StatusGame setPause(){
+        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                if( !this.puzzle.isGiven[row][col] && this.statusGame == StatusGame.PLAYING){
+                    this.cells[row][col].setEditable(false);
+                }else if( !this.puzzle.isGiven[row][col] && this.statusGame == StatusGame.PAUSED){
+                    this.cells[row][col].setEditable(true);
+                }
+            }
+        }
+        this.statusGame = ( this.statusGame == StatusGame.PLAYING ? StatusGame.PAUSED : StatusGame.PLAYING);
+        return this.statusGame;
+    }
+    public StatusGame getStatusGame(){
+        return this.statusGame;
     }
     public void restartGame(){
         this.createCellsGrid();
