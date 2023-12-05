@@ -106,7 +106,7 @@ public class SudokuMain extends JFrame {
             }
         });
 
-        this.tipButton = new JButton("Tipo");
+        this.tipButton = new JButton("Tip");
         this.tipButton.setPreferredSize(new Dimension(85, 20));
         this.tipButton.addActionListener(e -> {
 

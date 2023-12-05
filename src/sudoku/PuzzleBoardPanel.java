@@ -158,42 +158,47 @@ public class PuzzleBoardPanel extends JPanel {
     private class CellInputListener implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
-            this.keyPressed(e);
+
         }
         @Override
         public void keyPressed(KeyEvent e) {
-            Cell sourceCell = (Cell) e.getSource();
 
-            try{
-                int numberIn = Integer.parseInt(sourceCell.getText());
-
-                if( numberIn >= 1 && numberIn <=9 ){
-                    if( numberIn == sourceCell.number ){
-                        sourceCell.status = CellStatus.CORRECT_GUESS;
-                        PuzzleBoardPanel.this.correctGuesses.add(sourceCell);
-                    }else{
-                        sourceCell.status = CellStatus.WRONG_GUESS;
-                        PuzzleBoardPanel.this.errors++;
-                        PuzzleBoardPanel.this.correctGuesses.remove(sourceCell);
-                    }
-                }else{
-                    sourceCell.status = CellStatus.TO_GUESS;
-                    sourceCell.setText("");
-                }
-            }catch( Exception ex ){
-                sourceCell.status = CellStatus.TO_GUESS;
-                sourceCell.setText("");
-            } finally {
-                sourceCell.paint();
-            }
-            if( PuzzleBoardPanel.this.isSolved() ){
-                JOptionPane.showMessageDialog(PuzzleBoardPanel.this, "Você arrasou!", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
-                PuzzleBoardPanel.this.correctGuesses.stream().forEach(cell -> cell.setEditable(false));
-            }
         }
         @Override
         public void keyReleased(KeyEvent e) {
-            this.keyPressed(e);
+            Cell sourceCell = (Cell) e.getSource();
+            var valorEntered = sourceCell.getText();
+
+            if( !valorEntered.isBlank() ){
+                try{
+                    int numberIn = Integer.parseInt(valorEntered);
+                    if( numberIn >= 1 && numberIn <=9 ){
+                        if( numberIn == sourceCell.number ){
+                            if( sourceCell.status == CellStatus.TO_GUESS ||
+                                    sourceCell.status == CellStatus.WRONG_GUESS ){
+                                sourceCell.status = CellStatus.CORRECT_GUESS;
+                                PuzzleBoardPanel.this.correctGuesses.add(sourceCell);
+                            }
+                        }else{
+                            sourceCell.status = CellStatus.WRONG_GUESS;
+                            PuzzleBoardPanel.this.errors++;
+                            PuzzleBoardPanel.this.correctGuesses.remove(sourceCell);
+                        }
+                    }else{
+                        sourceCell.status = CellStatus.TO_GUESS;
+                        sourceCell.setText("");
+                    }
+                }catch( Exception ex ){
+                    sourceCell.status = CellStatus.TO_GUESS;
+                    sourceCell.setText("");
+                } finally {
+                    sourceCell.paint();
+                }
+                if( PuzzleBoardPanel.this.isSolved() ){
+                    JOptionPane.showMessageDialog(PuzzleBoardPanel.this, "Você arrasou!", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
+                    PuzzleBoardPanel.this.correctGuesses.stream().forEach(cell -> cell.setEditable(false));
+                }
+            }
         }
     }
 }
