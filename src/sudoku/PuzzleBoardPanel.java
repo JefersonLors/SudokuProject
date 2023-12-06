@@ -92,22 +92,24 @@ public class PuzzleBoardPanel extends JPanel {
     public void giveATip( int number ){
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                if( puzzle.grid[row][col] == number && puzzle.isGiven[row][col] ){
+                if( puzzle.grid[row][col] == number && !puzzle.isGiven[row][col] ){
                     this.cells[row][col].status = CellStatus.TEMPORALLY_GIVEN;
                     this.cells[row][col].paint();
                 }
             }
         }
-        new Timer ( SudokuConstants.TIME_TIP_GIVEN, e -> {
+        Timer timer = new Timer ( SudokuConstants.TIME_TIP_GIVEN, e -> {
             for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
                 for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                    if( puzzle.grid[row][col] == number && puzzle.isGiven[row][col] ){
+                    if( puzzle.grid[row][col] == number && !puzzle.isGiven[row][col] ){
                         this.cells[row][col].status = CellStatus.TO_GUESS;
                         this.cells[row][col].paint();
                     }
                 }
             }
-        }).start();
+        });
+        timer.start();
+        timer.setRepeats(false);
     }
     public void restartGame(){
         this.errors = 0;
@@ -196,6 +198,7 @@ public class PuzzleBoardPanel extends JPanel {
                         if( numberIn == sourceCell.number ){
                             if( sourceCell.status == CellStatus.TO_GUESS ||
                                     sourceCell.status == CellStatus.WRONG_GUESS ){
+
                                 sourceCell.status = CellStatus.CORRECT_GUESS;
                                 PuzzleBoardPanel.this.correctGuesses.add(sourceCell);
                             }

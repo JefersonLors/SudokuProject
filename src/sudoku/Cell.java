@@ -72,7 +72,6 @@ public class Cell extends JTextField {
         }else if( this.status == CellStatus.CORRECT_GUESS){
             //this.setColorCell(this.number);
             this.setForeground(SudokuConstants.FG_CORRECT_GUESS);
-
         }else if( this.status == CellStatus.WRONG_GUESS){
             super.setForeground(SudokuConstants.FG_WRONG_GUESS);
         }
