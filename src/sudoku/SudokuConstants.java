@@ -3,7 +3,7 @@ package sudoku;
 import java.awt.*;
 
 public class SudokuConstants {
-    public static final int TIME_TIP_GIVEN = 5000;
+    public static final int TIME_TIP_GIVEN = 3000;
     public static final int GRID_SIZE = 9;
     public static final int SUBGRID_SIZE = 3;
     public static final int CELL_SIZE = 70;

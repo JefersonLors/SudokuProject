@@ -13,7 +13,7 @@ public class SudokuMain extends JFrame {
     private JMenuBar statusBar;
     private JButton restartButton;
     private JButton pauseButton;
-    private JButton startButton;
+    private JButton newGameButton;
     private JButton tipButton;
     private JRadioButton easyLevelButton;
     private JRadioButton mediumLevelButton;
@@ -73,16 +73,16 @@ public class SudokuMain extends JFrame {
                 this.statusGame = this.gameBoard.getStatusGame();
                 this.tipButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
                 this.restartButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
-                this.startButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
+                this.newGameButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
                 this.easyLevelButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
                 this.mediumLevelButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
                 this.hardLevelButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
             }
         });
 
-        this.startButton = new JButton("New Game");
-        this.startButton.setPreferredSize(new Dimension(95, 20));
-        this.startButton.addActionListener(e -> {
+        this.newGameButton = new JButton("New Game");
+        this.newGameButton.setPreferredSize(new Dimension(95, 20));
+        this.newGameButton.addActionListener(e -> {
             int confirmation = 0;
             if( gameLevel == GameLevel.NON_SELECTED ){
                 JOptionPane.showMessageDialog(this, "Por favor, selecione um nível de jogo", "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -100,6 +100,7 @@ public class SudokuMain extends JFrame {
                     this.tipButton.setEnabled(true);
                     this.statusGame = StatusGame.PLAYING;
                     this.screenStatusGame.setText("Status : " + this.statusGame);
+                    this.screenGameTipAmount.setText("Tips: " + this.tipsUsed + "/"+ this.gameLevel.getAmoutTip());
                     this.startGameTimer();
                     this.startErrorCounter();
                     this.startHitsCounter();
@@ -111,17 +112,23 @@ public class SudokuMain extends JFrame {
         this.tipButton = new JButton("Tip");
         this.tipButton.setPreferredSize(new Dimension(95, 20));
         this.tipButton.addActionListener(e -> {
-            this.tipNumberSelected = new TipPanelDiolog().getSelectNumberTip();
-            if( this.tipNumberSelected >= 1 && this.tipNumberSelected <= 9  ){
-                this.gameBoard.giveATip(tipNumberSelected);
-                this.tipButton.setEnabled(false);
-                Timer timer = new Timer( SudokuConstants.TIME_TIP_GIVEN, ev -> {
-                    if( this.statusGame == StatusGame.PLAYING ){
-                        this.tipButton.setEnabled(true);
-                    }
-                });
-                timer.start();
-                timer.setRepeats(false);
+            if( this.tipsUsed < this.gameLevel.getAmoutTip() ){
+                this.tipNumberSelected = new TipPanelDiolog().getSelectNumberTip();
+                if( this.tipNumberSelected >= 1 && this.tipNumberSelected <= 9  ){
+                    this.gameBoard.giveATip(tipNumberSelected);
+                    this.tipButton.setEnabled(false);
+                    Timer timer = new Timer( SudokuConstants.TIME_TIP_GIVEN, ev -> {
+                        if( this.statusGame == StatusGame.PLAYING ){
+                            this.tipButton.setEnabled(true);
+                        }
+                    });
+                    timer.start();
+                    timer.setRepeats(false);
+                }
+                this.tipsUsed++;
+                this.screenGameTipAmount.setText("Tips: " + this.tipsUsed + "/"+ this.gameLevel.getAmoutTip());
+            }else{
+                JOptionPane.showMessageDialog(SudokuMain.this, "Ops! Parece que você não tem mais dicas :/", "Tip", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
@@ -205,7 +212,7 @@ public class SudokuMain extends JFrame {
         menuBarPanel.add(this.hardLevelButton);
 
         menuBarPanel.add(Box.createHorizontalStrut(10));
-        menuBarPanel.add(this.startButton);
+        menuBarPanel.add(this.newGameButton);
 
         menuBarPanel.add(Box.createHorizontalStrut(10));
         menuBarPanel.add(this.pauseButton);

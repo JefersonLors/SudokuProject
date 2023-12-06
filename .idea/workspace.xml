@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Correção bug do botão tip com botão de pausa">
+    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Corrigindo dimensões da status bar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sudoku/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/Puzzle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sudoku/SudokuConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/SudokuConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sudoku/SudokuMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/SudokuMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sudoku/enums/GameLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/enums/GameLevel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +99,7 @@
       <workItem from="1701475719484" duration="58353000" />
       <workItem from="1701609274281" duration="18007000" />
       <workItem from="1701648820102" duration="4549000" />
-      <workItem from="1701774198932" duration="21029000" />
+      <workItem from="1701774198932" duration="21934000" />
     </task>
     <task id="LOCAL-00001" summary="Iniciando o projeto">
       <option name="closed" value="true" />
@@ -318,14 +317,21 @@
       <option name="project" value="LOCAL" />
       <updated>1701830561647</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Corrigindo dimensões da status bar">
+      <option name="closed" value="true" />
+      <created>1701833314072</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1701833314072</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Criação da estrutura básica do projeto e da classe Cell" />
     <MESSAGE value="Jogo básico finalizado" />
     <MESSAGE value="Implementando os subgrides" />
     <MESSAGE value="Criação da tool bar com opções de nível e reinicio de jogo" />
@@ -350,7 +356,8 @@
     <MESSAGE value="Correção de bug das dicas" />
     <MESSAGE value="Correção bug do botão tip que poderia mostrar todo o jogo" />
     <MESSAGE value="Correção bug do botão tip com botão de pausa" />
-    <option name="LAST_COMMIT_MESSAGE" value="Correção bug do botão tip com botão de pausa" />
+    <MESSAGE value="Corrigindo dimensões da status bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Corrigindo dimensões da status bar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
