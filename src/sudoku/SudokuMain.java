@@ -26,10 +26,12 @@ public class SudokuMain extends JFrame {
     private JTextField screenErrorsAmount;
     private JTextField screenHitsAmount;
     private JTextField screenGameTimer;
+    private JTextField screenGameTipAmount;
     private int gameSeconds;
     private int gameMinutes;
     private Timer gameTimer;
-    private int tipNumber;
+    private int tipNumberSelected;
+    private int tipsUsed;
     public static void main( String[] args ){
         EventQueue.invokeLater(() -> {
             try {
@@ -50,7 +52,7 @@ public class SudokuMain extends JFrame {
         this.statusBar = new JMenuBar();
 
         this.restartButton = new JButton( "Restart");
-        this.restartButton.setPreferredSize(new Dimension(85, 20));
+        this.restartButton.setPreferredSize(new Dimension(95, 20));
         this.restartButton.addActionListener(e -> {
             if( gameLevel != GameLevel.NON_SELECTED ){
                 this.gameSeconds = 0;
@@ -63,7 +65,7 @@ public class SudokuMain extends JFrame {
         });
 
         this.pauseButton = new JButton( "Pause");
-        this.pauseButton.setPreferredSize(new Dimension(85, 20));
+        this.pauseButton.setPreferredSize(new Dimension(95, 20));
         this.pauseButton.addActionListener(e -> {
             if( this.statusGame != StatusGame.NON_INICIALIZED){
                 this.screenStatusGame.setText("Status : " + this.gameBoard.setPause());
@@ -78,8 +80,8 @@ public class SudokuMain extends JFrame {
             }
         });
 
-        this.startButton = new JButton("Start");
-        this.startButton.setPreferredSize(new Dimension(85, 20));
+        this.startButton = new JButton("New Game");
+        this.startButton.setPreferredSize(new Dimension(95, 20));
         this.startButton.addActionListener(e -> {
             int confirmation = 0;
             if( gameLevel == GameLevel.NON_SELECTED ){
@@ -107,11 +109,11 @@ public class SudokuMain extends JFrame {
         });
 
         this.tipButton = new JButton("Tip");
-        this.tipButton.setPreferredSize(new Dimension(85, 20));
+        this.tipButton.setPreferredSize(new Dimension(95, 20));
         this.tipButton.addActionListener(e -> {
-            this.tipNumber = new TipPanelDiolog().getSelectNumberTip();
-            if( this.tipNumber >= 1 && this.tipNumber <= 9  ){
-                this.gameBoard.giveATip(tipNumber);
+            this.tipNumberSelected = new TipPanelDiolog().getSelectNumberTip();
+            if( this.tipNumberSelected >= 1 && this.tipNumberSelected <= 9  ){
+                this.gameBoard.giveATip(tipNumberSelected);
                 this.tipButton.setEnabled(false);
                 Timer timer = new Timer( SudokuConstants.TIME_TIP_GIVEN, ev -> {
                     if( this.statusGame == StatusGame.PLAYING ){
@@ -139,19 +141,25 @@ public class SudokuMain extends JFrame {
         this.screenCurrLevel.setFont( new Font("OCR A Extend", Font.HANGING_BASELINE, 15));
 
         this.screenStatusGame = new JTextField("Status: " );
-        this.screenStatusGame.setPreferredSize(new Dimension(150, 20));
+        this.screenStatusGame.setPreferredSize(new Dimension(140, 20));
         this.screenStatusGame.setEditable(false);
         this.screenStatusGame.setBorder(null);
         this.screenStatusGame.setFont( new Font("OCR A Extend", Font.HANGING_BASELINE, 15));
 
         this.screenErrorsAmount = new JTextField("Errors: " + this.gameBoard.getErrorsAmount());
-        this.screenErrorsAmount.setPreferredSize(new Dimension(100, 20));
+        this.screenErrorsAmount.setPreferredSize(new Dimension(85, 20));
         this.screenErrorsAmount.setEditable(false);
         this.screenErrorsAmount.setBorder(null);
         this.screenErrorsAmount.setFont( new Font("OCR A Extend", Font.HANGING_BASELINE, 15));
 
+        this.screenGameTipAmount = new JTextField("Tips: " + this.tipsUsed + "/" + this.gameLevel.getAmoutTip());
+        this.screenGameTipAmount.setPreferredSize(new Dimension(80, 15));
+        this.screenGameTipAmount.setEditable(false);
+        this.screenGameTipAmount.setBorder(null);
+        this.screenGameTipAmount.setFont( new Font("OCR A Extend", Font.HANGING_BASELINE, 15));
+
         this.screenHitsAmount = new JTextField("Hits: " + this.gameBoard.getHitsAmount());
-        this.screenHitsAmount.setPreferredSize(new Dimension(100, 20));
+        this.screenHitsAmount.setPreferredSize(new Dimension(60, 20));
         this.screenHitsAmount.setEditable(false);
         this.screenHitsAmount.setBorder(null);
         this.screenHitsAmount.setFont( new Font("OCR A Extend", Font.HANGING_BASELINE, 15));
@@ -167,7 +175,7 @@ public class SudokuMain extends JFrame {
     public void newGame(){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-        this.setLocation(700, 200); //Posiciona o frame na tela
+        this.setLocation(700, 200);
         this.setTitle("Sudoku Game");
         this.setIconImage(new ImageIcon("src/sudoku/images/sudoku.png").getImage());
         this.setMenuBar();
@@ -192,7 +200,6 @@ public class SudokuMain extends JFrame {
         this.levelsGroup.add(this.mediumLevelButton);
         this.levelsGroup.add(this.hardLevelButton);
 
-        menuBarPanel.add(Box.createHorizontalStrut(5));
         menuBarPanel.add(this.easyLevelButton);
         menuBarPanel.add(this.mediumLevelButton);
         menuBarPanel.add(this.hardLevelButton);
@@ -220,6 +227,7 @@ public class SudokuMain extends JFrame {
         statusBarPanel.add(Box.createHorizontalStrut(10));
         statusBarPanel.add(this.screenCurrLevel);
         statusBarPanel.add(this.screenStatusGame);
+        statusBarPanel.add(this.screenGameTipAmount);
         statusBarPanel.add(this.screenHitsAmount);
         statusBarPanel.add(this.screenErrorsAmount);
         statusBarPanel.add(this.screenGameTimer);

@@ -1,15 +1,20 @@
 package sudoku.enums;
 
 public enum GameLevel {
-    EASY(40),
-    MEDIUM(80),
-    HARD(150),
-    NON_SELECTED(0);
-    private int val;
-    GameLevel( int qtyToGuess){
-        this.val = qtyToGuess;
+    EASY(40, 1),
+    MEDIUM(80, 1),
+    HARD(150,1),
+    NON_SELECTED(0, 0);
+    private int amountToGuess;
+    private int amountTips;
+    GameLevel( int amountToGuess, int amountTips){
+        this.amountToGuess = amountToGuess;
+        this.amountTips = amountTips;
     }
-    public int getValue(){
-        return this.val;
+    public int getAmountToGuess(){
+        return this.amountToGuess;
+    }
+    public int getAmoutTip(){
+        return this.amountTips;
     }
 }
