@@ -89,6 +89,26 @@ public class PuzzleBoardPanel extends JPanel {
     public int getHitsAmount(){
         return this.correctGuesses.size();
     }
+    public void giveATip( int number ){
+        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                if( puzzle.grid[row][col] == number && puzzle.isGiven[row][col] ){
+                    this.cells[row][col].status = CellStatus.TEMPORALLY_GIVEN;
+                    this.cells[row][col].paint();
+                }
+            }
+        }
+        new Timer ( SudokuConstants.TIME_TIP_GIVEN, e -> {
+            for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+                for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                    if( puzzle.grid[row][col] == number && puzzle.isGiven[row][col] ){
+                        this.cells[row][col].status = CellStatus.TO_GUESS;
+                        this.cells[row][col].paint();
+                    }
+                }
+            }
+        }).start();
+    }
     public void restartGame(){
         this.errors = 0;
         this.createCellsGrid();

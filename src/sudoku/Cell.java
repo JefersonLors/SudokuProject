@@ -29,9 +29,9 @@ public class Cell extends JTextField {
                 break;
             case 2: this.setBackground(SudokuConstants.BG_NUMBER_TWO);
                 break;
-            case 3: this.setBackground(SudokuConstants.BG_NUMBER_TREE);
+            case 3: this.setBackground(SudokuConstants.BG_NUMBER_THREE);
                 break;
-            case 4: this.setBackground(SudokuConstants.BG_NUMBER_FOR);
+            case 4: this.setBackground(SudokuConstants.BG_NUMBER_FOUR);
                 break;
             case 5: this.setBackground(SudokuConstants.BG_NUMBER_FIVE);
                 break;
@@ -62,6 +62,10 @@ public class Cell extends JTextField {
             super.setText(number + "");
             super.setEditable(false);
             this.setColorCell(this.number);
+        }else if( this.status ==  CellStatus.TEMPORALLY_GIVEN){
+            super.setText(number + "");
+            super.setEditable(false);
+            this.setForeground(SudokuConstants.FG_CORRECT_GUESS);
         }else if( this.status == CellStatus.TO_GUESS){
             super.setText("");
             super.setEditable(true);

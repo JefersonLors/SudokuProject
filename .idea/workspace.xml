@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Adição da pontuação atual do player no status bar">
+    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Correção do bug dos erros e acertos">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sudoku/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/Cell.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sudoku/SudokuConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/SudokuConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sudoku/SudokuMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/SudokuMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sudoku/enums/GameLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/enums/GameLevel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sudoku/enums/CellStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/enums/CellStatus.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +101,7 @@
       <workItem from="1701475719484" duration="58353000" />
       <workItem from="1701609274281" duration="18007000" />
       <workItem from="1701648820102" duration="4549000" />
-      <workItem from="1701774198932" duration="5923000" />
+      <workItem from="1701774198932" duration="15855000" />
     </task>
     <task id="LOCAL-00001" summary="Iniciando o projeto">
       <option name="closed" value="true" />
@@ -277,7 +279,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701749371512</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Correção do bug dos erros e acertos">
+      <option name="closed" value="true" />
+      <created>1701816629657</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1701816629657</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -306,16 +316,12 @@
     <MESSAGE value="Cronometro e contador de erros implementados" />
     <MESSAGE value="Correção cronometro de jogo" />
     <MESSAGE value="Adição da pontuação atual do player no status bar" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adição da pontuação atual do player no status bar" />
+    <MESSAGE value="Correção do bug dos erros e acertos" />
+    <option name="LAST_COMMIT_MESSAGE" value="Correção do bug dos erros e acertos" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java</url>
-          <line>64</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java</url>
           <line>43</line>
@@ -323,8 +329,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/sudoku/SudokuMain.java</url>
-          <line>227</line>
+          <line>231</line>
           <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

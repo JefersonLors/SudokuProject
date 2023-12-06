@@ -29,6 +29,7 @@ public class SudokuMain extends JFrame {
     private int gameSeconds;
     private int gameMinutes;
     private Timer gameTimer;
+    private int tipNumber;
     public static void main( String[] args ){
         EventQueue.invokeLater(() -> {
             try {
@@ -109,7 +110,10 @@ public class SudokuMain extends JFrame {
         this.tipButton = new JButton("Tip");
         this.tipButton.setPreferredSize(new Dimension(85, 20));
         this.tipButton.addActionListener(e -> {
-
+            this.tipNumber = new TipPanelDiolog().getSelectNumberTip();
+            if( this.tipNumber >= 1 && this.tipNumber <= 9  ){
+                this.gameBoard.giveATip(tipNumber);
+            }
         });
 
         this.easyLevelButton = new JRadioButton("easy");
@@ -238,6 +242,145 @@ public class SudokuMain extends JFrame {
                     }
             });
             this.gameTimer.start();
+        }
+    }
+    private class TipPanelDiolog extends JDialog{
+        private int panelWidth = 600;
+        private int panelHeigth = 140;
+        private JPanel optionsPane;
+        private JButton tipNumberOne;
+        private JButton tipNumberTwo;
+        private JButton tipNumberThree;
+        private JButton tipNumberFour;
+        private JButton tipNumberFive;
+        private JButton tipNumberSix;
+        private JButton tipNumberSeven;
+        private JButton tipNumberEigth;
+        private JButton tipNumberNine;
+        private int numberTipSelected;
+
+        public TipPanelDiolog(){
+            super(SudokuMain.this, true);
+            super.setTitle("Tip");
+            this.setResizable(false);
+            this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            this.setLayout(new FlowLayout());
+            this.setSize(this.panelWidth, this.panelHeigth);
+            this.setLocationRelativeTo(SudokuMain.this);
+            this.inicializeComponents();
+            this.numberTipSelected = 0;
+        }
+
+        private void inicializeComponents(){
+            this.optionsPane = new JPanel();
+            this.optionsPane.setLayout(new FlowLayout());
+            this.optionsPane.setSize(new Dimension(this.panelWidth, this.panelHeigth));
+            this.optionsPane.setBackground(SudokuConstants.BG_PANEL_TIP);
+
+            this.tipNumberOne = new JButton("1");
+            this.tipNumberOne.setFont(SudokuConstants.FONT_NUMBERS);
+            this.tipNumberOne.setPreferredSize(new Dimension(60, 60));
+            this.tipNumberOne.setBackground( SudokuConstants.BG_NUMBER_ONE);
+            this.tipNumberOne.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+            this.tipNumberOne.addActionListener( e -> {
+                this.numberTipSelected = 1;
+                this.dispose();
+            } );
+            this.optionsPane.add(this.tipNumberOne);
+
+            this.tipNumberTwo = new JButton("2");
+            this.tipNumberTwo.setFont(SudokuConstants.FONT_NUMBERS);
+            this.tipNumberTwo.setPreferredSize(new Dimension(60, 60));
+            this.tipNumberTwo.setBackground( SudokuConstants.BG_NUMBER_TWO);
+            this.tipNumberTwo.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+            this.tipNumberTwo.addActionListener( e -> {
+                this.numberTipSelected = 2;
+                this.dispose();
+            } );
+            this.optionsPane.add(this.tipNumberTwo);
+
+            this.tipNumberThree = new JButton("3");
+            this.tipNumberThree.setFont(SudokuConstants.FONT_NUMBERS);
+            this.tipNumberThree.setPreferredSize(new Dimension(60, 60));
+            this.tipNumberThree.setBackground( SudokuConstants.BG_NUMBER_THREE);
+            this.tipNumberThree.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+            this.tipNumberThree.addActionListener( e -> {
+                this.numberTipSelected = 3;
+                this.dispose();
+            });
+            this.optionsPane.add(this.tipNumberThree);
+
+            this.tipNumberFour = new JButton("4");
+            this.tipNumberFour.setFont(SudokuConstants.FONT_NUMBERS);
+            this.tipNumberFour.setPreferredSize(new Dimension(60, 60));
+            this.tipNumberFour.setBackground( SudokuConstants.BG_NUMBER_FOUR);
+            this.tipNumberFour.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+            this.tipNumberFour.addActionListener( e -> {
+                this.numberTipSelected = 4;
+                this.dispose();
+            } );
+            this.optionsPane.add(this.tipNumberFour);
+
+            this.tipNumberFive = new JButton("5");
+            this.tipNumberFive.setFont(SudokuConstants.FONT_NUMBERS);
+            this.tipNumberFive.setPreferredSize(new Dimension(60, 60));
+            this.tipNumberFive.setBackground( SudokuConstants.BG_NUMBER_FIVE);
+            this.tipNumberFive.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+            this.tipNumberFive.addActionListener( e -> {
+                this.numberTipSelected = 5;
+                this.dispose();
+            } );
+            this.optionsPane.add(this.tipNumberFive);
+
+            this.tipNumberSix = new JButton("6");
+            this.tipNumberSix.setFont(SudokuConstants.FONT_NUMBERS);
+            this.tipNumberSix.setPreferredSize(new Dimension(60, 60));
+            this.tipNumberSix.setBackground( SudokuConstants.BG_NUMBER_SIX);
+            this.tipNumberSix.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+            this.tipNumberSix.addActionListener( e -> {
+                this.numberTipSelected = 6;
+                this.dispose();
+            } );
+            this.optionsPane.add(this.tipNumberSix);
+
+            this.tipNumberSeven = new JButton("7");
+            this.tipNumberSeven.setFont(SudokuConstants.FONT_NUMBERS);
+            this.tipNumberSeven.setPreferredSize(new Dimension(60, 60));
+            this.tipNumberSeven.setBackground( SudokuConstants.BG_NUMBER_SEVEN);
+            this.tipNumberSeven.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+            this.tipNumberSeven.addActionListener( e -> {
+                this.numberTipSelected = 7;
+                this.dispose();
+            } );
+            this.optionsPane.add(this.tipNumberSeven);
+
+            this.tipNumberEigth = new JButton("8");
+            this.tipNumberEigth.setFont(SudokuConstants.FONT_NUMBERS);
+            this.tipNumberEigth.setPreferredSize(new Dimension(60, 60));
+            this.tipNumberEigth.setBackground( SudokuConstants.BG_NUMBER_EIGTH);
+            this.tipNumberEigth.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+            this.tipNumberEigth.addActionListener( e -> {
+                this.numberTipSelected = 8;
+                this.dispose();
+            } );
+            this.optionsPane.add(this.tipNumberEigth);
+
+            this.tipNumberNine = new JButton("9");
+            this.tipNumberNine.setFont(SudokuConstants.FONT_NUMBERS);
+            this.tipNumberNine.setPreferredSize(new Dimension(60, 60));
+            this.tipNumberNine.setBackground( SudokuConstants.BG_NUMBER_NINE);
+            this.tipNumberNine.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+            this.tipNumberNine.addActionListener( e -> {
+                this.numberTipSelected = 9;
+                this.dispose();
+            } );
+            this.optionsPane.add(this.tipNumberNine);
+            super.getContentPane().add(this.optionsPane);
+        }
+        public int getSelectNumberTip(){
+            this.optionsPane.setVisible(true);
+            this.setVisible(true);
+            return this.numberTipSelected;
         }
     }
 }
