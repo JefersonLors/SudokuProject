@@ -49,7 +49,6 @@ public class SudokuMain extends JFrame {
         this.menuBar = new JMenuBar();
         this.statusBar = new JMenuBar();
 
-        //Icon restart = new ImageIcon( "src/sudoku/images/restart-icon-7.png");
         this.restartButton = new JButton( "Restart");
         this.restartButton.setPreferredSize(new Dimension(85, 20));
         this.restartButton.addActionListener(e -> {
@@ -114,7 +113,11 @@ public class SudokuMain extends JFrame {
             if( this.tipNumber >= 1 && this.tipNumber <= 9  ){
                 this.gameBoard.giveATip(tipNumber);
                 this.tipButton.setEnabled(false);
-                Timer timer = new Timer( SudokuConstants.TIME_TIP_GIVEN, ev -> this.tipButton.setEnabled(true));
+                Timer timer = new Timer( SudokuConstants.TIME_TIP_GIVEN, ev -> {
+                    if( this.statusGame == StatusGame.PLAYING ){
+                        this.tipButton.setEnabled(true);
+                    }
+                });
                 timer.start();
                 timer.setRepeats(false);
             }
