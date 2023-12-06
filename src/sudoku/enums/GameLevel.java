@@ -14,7 +14,5 @@ public enum GameLevel {
     public int getAmountToGuess(){
         return this.amountToGuess;
     }
-    public int getAmoutTip(){
-        return this.amountTips;
-    }
+    public int getAmoutTip(){return this.amountTips;}
 }

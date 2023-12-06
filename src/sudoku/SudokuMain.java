@@ -94,13 +94,13 @@ public class SudokuMain extends JFrame {
                 }
                 if( confirmation == 0 || !this.gameBoard.haveProgres() ){
                     this.gameBoard.newGame(gameLevel);
+                    this.tipsUsed = 0;
                     this.screenCurrLevel.setText("Level: " + (gameLevel == GameLevel.NON_SELECTED ? "" : gameLevel));
                     this.restartButton.setEnabled(true);
                     this.pauseButton.setEnabled(true);
                     this.tipButton.setEnabled(true);
                     this.statusGame = StatusGame.PLAYING;
                     this.screenStatusGame.setText("Status : " + this.statusGame);
-                    this.screenGameTipAmount.setText("Tips: " + this.tipsUsed + "/"+ this.gameLevel.getAmoutTip());
                     this.startGameTimer();
                     this.startErrorCounter();
                     this.startHitsCounter();
@@ -115,6 +115,7 @@ public class SudokuMain extends JFrame {
             if( this.tipsUsed < this.gameLevel.getAmoutTip() ){
                 this.tipNumberSelected = new TipPanelDiolog().getSelectNumberTip();
                 if( this.tipNumberSelected >= 1 && this.tipNumberSelected <= 9  ){
+                    this.tipsUsed++;
                     this.gameBoard.giveATip(tipNumberSelected);
                     this.tipButton.setEnabled(false);
                     Timer timer = new Timer( SudokuConstants.TIME_TIP_GIVEN, ev -> {
@@ -125,7 +126,6 @@ public class SudokuMain extends JFrame {
                     timer.start();
                     timer.setRepeats(false);
                 }
-                this.tipsUsed++;
                 this.screenGameTipAmount.setText("Tips: " + this.tipsUsed + "/"+ this.gameLevel.getAmoutTip());
             }else{
                 JOptionPane.showMessageDialog(SudokuMain.this, "Ops! Parece que você não tem mais dicas :/", "Tip", JOptionPane.INFORMATION_MESSAGE);
