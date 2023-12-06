@@ -113,6 +113,10 @@ public class SudokuMain extends JFrame {
             this.tipNumber = new TipPanelDiolog().getSelectNumberTip();
             if( this.tipNumber >= 1 && this.tipNumber <= 9  ){
                 this.gameBoard.giveATip(tipNumber);
+                this.tipButton.setEnabled(false);
+                Timer timer = new Timer( SudokuConstants.TIME_TIP_GIVEN, ev -> this.tipButton.setEnabled(true));
+                timer.start();
+                timer.setRepeats(false);
             }
         });
 
