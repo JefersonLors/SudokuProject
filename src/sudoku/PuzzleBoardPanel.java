@@ -86,6 +86,31 @@ public class PuzzleBoardPanel extends JPanel {
     public int getErrorsAmount(){
         return this.errors;
     }
+    public int getHitsAmount(){
+        return this.correctGuesses.size();
+    }
+    public void giveATip( int number ){
+        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                if( puzzle.grid[row][col] == number && !puzzle.isGiven[row][col] ){
+                    this.cells[row][col].status = CellStatus.TEMPORALLY_GIVEN;
+                    this.cells[row][col].paint();
+                }
+            }
+        }
+        Timer timer = new Timer ( SudokuConstants.TIME_TIP_GIVEN, e -> {
+            for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+                for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                    if( puzzle.grid[row][col] == number && !puzzle.isGiven[row][col] ){
+                        this.cells[row][col].status = CellStatus.TO_GUESS;
+                        this.cells[row][col].paint();
+                    }
+                }
+            }
+        });
+        timer.start();
+        timer.setRepeats(false);
+    }
     public void restartGame(){
         this.errors = 0;
         this.createCellsGrid();
@@ -155,42 +180,48 @@ public class PuzzleBoardPanel extends JPanel {
     private class CellInputListener implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
-            this.keyPressed(e);
+
         }
         @Override
         public void keyPressed(KeyEvent e) {
-            Cell sourceCell = (Cell) e.getSource();
 
-            try{
-                int numberIn = Integer.parseInt(sourceCell.getText());
-
-                if( numberIn >= 1 && numberIn <=9 ){
-                    if( numberIn == sourceCell.number ){
-                        sourceCell.status = CellStatus.CORRECT_GUESS;
-                        PuzzleBoardPanel.this.correctGuesses.add(sourceCell);
-                    }else{
-                        sourceCell.status = CellStatus.WRONG_GUESS;
-                        PuzzleBoardPanel.this.errors++;
-                        PuzzleBoardPanel.this.correctGuesses.remove(sourceCell);
-                    }
-                }else{
-                    sourceCell.status = CellStatus.TO_GUESS;
-                    sourceCell.setText("");
-                }
-            }catch( Exception ex ){
-                sourceCell.status = CellStatus.TO_GUESS;
-                sourceCell.setText("");
-            } finally {
-                sourceCell.paint();
-            }
-            if( PuzzleBoardPanel.this.isSolved() ){
-                JOptionPane.showMessageDialog(PuzzleBoardPanel.this, "Você arrasou!", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
-                PuzzleBoardPanel.this.correctGuesses.stream().forEach(cell -> cell.setEditable(false));
-            }
         }
         @Override
         public void keyReleased(KeyEvent e) {
-            this.keyPressed(e);
+            Cell sourceCell = (Cell) e.getSource();
+            var valorEntered = sourceCell.getText();
+
+            if( !valorEntered.isBlank() ){
+                try{
+                    int numberIn = Integer.parseInt(valorEntered);
+                    if( numberIn >= 1 && numberIn <=9 ){
+                        if( numberIn == sourceCell.number ){
+                            if( sourceCell.status == CellStatus.TO_GUESS ||
+                                    sourceCell.status == CellStatus.WRONG_GUESS ){
+
+                                sourceCell.status = CellStatus.CORRECT_GUESS;
+                                PuzzleBoardPanel.this.correctGuesses.add(sourceCell);
+                            }
+                        }else{
+                            sourceCell.status = CellStatus.WRONG_GUESS;
+                            PuzzleBoardPanel.this.errors++;
+                            PuzzleBoardPanel.this.correctGuesses.remove(sourceCell);
+                        }
+                    }else{
+                        sourceCell.status = CellStatus.TO_GUESS;
+                        sourceCell.setText("");
+                    }
+                }catch( Exception ex ){
+                    sourceCell.status = CellStatus.TO_GUESS;
+                    sourceCell.setText("");
+                } finally {
+                    sourceCell.paint();
+                }
+                if( PuzzleBoardPanel.this.isSolved() ){
+                    JOptionPane.showMessageDialog(PuzzleBoardPanel.this, "Você arrasou!", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
+                    PuzzleBoardPanel.this.correctGuesses.stream().forEach(cell -> cell.setEditable(false));
+                }
+            }
         }
     }
 }

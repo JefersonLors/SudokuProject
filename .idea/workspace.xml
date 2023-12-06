@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Cronometro e contador de erros implementados">
+    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Corrigindo dimensões da status bar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sudoku/SudokuConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/SudokuConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sudoku/SudokuMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/SudokuMain.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,6 +45,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -97,6 +99,7 @@
       <workItem from="1701475719484" duration="58353000" />
       <workItem from="1701609274281" duration="18007000" />
       <workItem from="1701648820102" duration="4549000" />
+      <workItem from="1701774198932" duration="21934000" />
     </task>
     <task id="LOCAL-00001" summary="Iniciando o projeto">
       <option name="closed" value="true" />
@@ -258,16 +261,77 @@
       <option name="project" value="LOCAL" />
       <updated>1701743675174</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Correção cronometro de jogo">
+      <option name="closed" value="true" />
+      <created>1701748275082</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1701748275082</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Adição da pontuação atual do player no status bar">
+      <option name="closed" value="true" />
+      <created>1701749371512</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1701749371512</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Correção do bug dos erros e acertos">
+      <option name="closed" value="true" />
+      <created>1701816629657</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1701816629657</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Criação do evento de dica do botão Tip">
+      <option name="closed" value="true" />
+      <created>1701828124772</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1701828124772</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Correção de bug das dicas">
+      <option name="closed" value="true" />
+      <created>1701829343077</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1701829343077</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Correção bug do botão tip que poderia mostrar todo o jogo">
+      <option name="closed" value="true" />
+      <created>1701829949170</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1701829949170</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Correção bug do botão tip com botão de pausa">
+      <option name="closed" value="true" />
+      <created>1701830561647</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1701830561647</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Corrigindo dimensões da status bar">
+      <option name="closed" value="true" />
+      <created>1701833314072</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1701833314072</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Iniciando o projeto" />
-    <MESSAGE value="Comentário teste" />
-    <MESSAGE value="Criação da estrutura básica do projeto e da classe Cell" />
     <MESSAGE value="Jogo básico finalizado" />
     <MESSAGE value="Implementando os subgrides" />
     <MESSAGE value="Criação da tool bar com opções de nível e reinicio de jogo" />
@@ -285,20 +349,28 @@
     <MESSAGE value="Mudando o ícone da aplicação" />
     <MESSAGE value="Adição do botão de pausa e da barra de status." />
     <MESSAGE value="Cronometro e contador de erros implementados" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cronometro e contador de erros implementados" />
+    <MESSAGE value="Correção cronometro de jogo" />
+    <MESSAGE value="Adição da pontuação atual do player no status bar" />
+    <MESSAGE value="Correção do bug dos erros e acertos" />
+    <MESSAGE value="Criação do evento de dica do botão Tip" />
+    <MESSAGE value="Correção de bug das dicas" />
+    <MESSAGE value="Correção bug do botão tip que poderia mostrar todo o jogo" />
+    <MESSAGE value="Correção bug do botão tip com botão de pausa" />
+    <MESSAGE value="Corrigindo dimensões da status bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Corrigindo dimensões da status bar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java</url>
-          <line>64</line>
-          <option name="timeStamp" value="3" />
+          <line>43</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="7" />
+          <line>53</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

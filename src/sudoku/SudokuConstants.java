@@ -3,6 +3,7 @@ package sudoku;
 import java.awt.*;
 
 public class SudokuConstants {
+    public static final int TIME_TIP_GIVEN = 3000;
     public static final int GRID_SIZE = 9;
     public static final int SUBGRID_SIZE = 3;
     public static final int CELL_SIZE = 70;
@@ -21,11 +22,13 @@ public class SudokuConstants {
     public static final Color BG_TO_GUESS = new Color(217, 217, 217);
     public static final Color BG_NUMBER_ONE = new Color(210, 164, 164);
     public static final Color BG_NUMBER_TWO = new Color(208, 187, 161);
-    public static final Color BG_NUMBER_TREE = new Color(200, 208, 163);
-    public static final Color BG_NUMBER_FOR = new Color(180, 199, 168);
+    public static final Color BG_NUMBER_THREE = new Color(200, 208, 163);
+    public static final Color BG_NUMBER_FOUR = new Color(180, 199, 168);
     public static final Color BG_NUMBER_FIVE = new Color(178, 194, 211);
     public static final Color BG_NUMBER_SIX = new Color(178, 179, 211);
     public static final Color BG_NUMBER_SEVEN = new Color(189, 175, 175);
     public static final Color BG_NUMBER_EIGTH = new Color(190, 175, 206);
     public static final Color BG_NUMBER_NINE = new Color(208, 187, 180, 234);
+
+    public static final Color BG_PANEL_TIP = new Color(217, 217, 217);
 }

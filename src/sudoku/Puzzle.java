@@ -98,7 +98,7 @@ public class Puzzle {
                                         {true, true, true, true, true, true, true, true, true},
                                         {true, true, true, true, true, true, true, true, true}};
 
-        this.generateToGuess( hardcodedIsGiven, level.getValue() );
+        this.generateToGuess( hardcodedIsGiven, level.getAmountToGuess() );
 
         for( int row = 0; row < SudokuConstants.GRID_SIZE; row++){
             for( int col = 0; col < SudokuConstants.GRID_SIZE; col++){
