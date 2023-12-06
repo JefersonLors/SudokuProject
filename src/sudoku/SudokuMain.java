@@ -5,6 +5,9 @@ import sudoku.enums.StatusGame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 public class SudokuMain extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -37,6 +40,7 @@ public class SudokuMain extends JFrame {
             try {
                 new SudokuMain();
             } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Warning", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
             }
         });
@@ -178,16 +182,31 @@ public class SudokuMain extends JFrame {
         this.screenGameTimer.setFont( new Font("OCR A Extend", Font.HANGING_BASELINE, 15));
 
         this.levelsGroup = new ButtonGroup();
-    }
-    public void newGame(){
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setResizable(false);
         this.setLocation(700, 200);
         this.setTitle("Sudoku Game");
         this.setIconImage(new ImageIcon("src/sudoku/images/sudoku.png").getImage());
         this.setMenuBar();
         this.setStatusBar();
-
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if( SudokuMain.this.gameBoard.haveProgres() ){
+                    int confirmation = JOptionPane.showConfirmDialog(SudokuMain.this,
+                            "Deseja abandonar o jogo atual? Todo o seu progresso será perdido.",
+                            "Aviso", JOptionPane.YES_NO_OPTION);
+                    if( confirmation == 0 ){
+                        System.exit(0);
+                    }
+                }else{
+                    System.exit(0);
+                }
+            }
+        });
+    }
+    public void newGame(){
         this.gameBoard.newGame(gameLevel);
         this.getContentPane().add(this.gameBoard, BorderLayout.CENTER);
         this.restartButton.setEnabled(false);
@@ -197,7 +216,6 @@ public class SudokuMain extends JFrame {
         this.pack();
 //        this.setSize(SudokuConstants.BOARD_WIDTH, SudokuConstants.BOARD_HEIGHT); //seta as dimensões da tela
         this.setVisible(true);
-
     }
     private void setMenuBar(){
         JPanel menuBarPanel =  new JPanel();
