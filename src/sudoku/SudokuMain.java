@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 public class SudokuMain extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -271,6 +270,9 @@ public class SudokuMain extends JFrame {
     private void startGameTimer(){
         this.gameSeconds = 0;
         this.gameMinutes = 0;
+
+        this.gameTimer = this.gameBoard.getGameTimer();
+
         if( this.gameTimer != null ){
             this.gameTimer.restart();
         }else{
@@ -281,6 +283,7 @@ public class SudokuMain extends JFrame {
                         this.screenGameTimer.setText("Timer: " + String.format( "%02d", this.gameMinutes ) + ":" + String.format( "%02d", this.gameSeconds));
                     }
             });
+            this.gameBoard.setGameTimer(this.gameTimer);
             this.gameTimer.start();
         }
     }

@@ -17,6 +17,7 @@ public class PuzzleBoardPanel extends JPanel {
     private ArrayList<Cell> correctGuesses;
     private StatusGame statusGame;
     private int errors;
+    private Timer gameTimer;
     public PuzzleBoardPanel(){
         super();
         this.correctGuesses = new ArrayList<Cell>();
@@ -110,6 +111,12 @@ public class PuzzleBoardPanel extends JPanel {
         });
         timer.start();
         timer.setRepeats(false);
+    }
+    public void setGameTimer( Timer gameTimer ){
+        this.gameTimer = gameTimer;
+    }
+    public Timer getGameTimer(){
+        return this.gameTimer;
     }
     public void restartGame(){
         this.errors = 0;
@@ -218,6 +225,7 @@ public class PuzzleBoardPanel extends JPanel {
                     sourceCell.paint();
                 }
                 if( PuzzleBoardPanel.this.isSolved() ){
+                    PuzzleBoardPanel.this.gameTimer.stop();
                     JOptionPane.showMessageDialog(PuzzleBoardPanel.this, "Você arrasou!", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
                     PuzzleBoardPanel.this.correctGuesses.stream().forEach(cell -> cell.setEditable(false));
                 }
