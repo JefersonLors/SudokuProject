@@ -60,6 +60,7 @@ public class SudokuMain extends JFrame {
         Image restartIcon = ImageIO.read(new File("src/sudoku/images/restartIcon.png" ));
         this.restartButton = new JButton(new ImageIcon(restartIcon.getScaledInstance(20, 20, restartIcon.SCALE_DEFAULT)));
         this.restartButton.setPreferredSize(new Dimension(80, 30));
+        this.restartButton.setBackground(SudokuConstants.RESTART_BUTTON_COLOR);
         this.restartButton.setToolTipText("Restart");
         this.restartButton.addActionListener(e -> {
             int confirmation = 0;
@@ -84,6 +85,7 @@ public class SudokuMain extends JFrame {
         Image pauseIcon = ImageIO.read(new File("src/sudoku/images/pauseIcon.png"));
         this.pauseButton = new JButton( new ImageIcon(pauseIcon.getScaledInstance(20, 20, pauseIcon.SCALE_DEFAULT)));
         this.pauseButton.setPreferredSize(new Dimension(80, 30));
+        this.pauseButton.setBackground(SudokuConstants.PAUSE_BUTTON_COLOR);
         this.pauseButton.setToolTipText("Pause");
         this.pauseButton.addActionListener(e -> {
             if( this.statusGame != StatusGame.NON_INICIALIZED){
@@ -106,6 +108,7 @@ public class SudokuMain extends JFrame {
         Image startIcon = ImageIO.read(new File("src/sudoku/images/playIcon.png"));
         this.newGameButton = new JButton( new ImageIcon(startIcon.getScaledInstance(20, 20, startIcon.SCALE_DEFAULT)));
         this.newGameButton.setPreferredSize(new Dimension(80, 30));
+        this.newGameButton.setBackground(SudokuConstants.START_BUTTON_COLOR);
         this.newGameButton.setToolTipText("Start");
         this.newGameButton.addActionListener(e -> {
             int confirmation = 0;
@@ -138,6 +141,7 @@ public class SudokuMain extends JFrame {
         Image tipIcon = ImageIO.read(new File("src/sudoku/images/ideaIcon.png"));
         this.tipButton = new JButton( new ImageIcon(tipIcon.getScaledInstance(20, 20, tipIcon.SCALE_DEFAULT)));
         this.tipButton.setPreferredSize(new Dimension(80, 30));
+        this.tipButton.setBackground(SudokuConstants.TIP_BUTTON_COLOR);
         this.tipButton.setToolTipText("Tip");
         this.tipButton.addActionListener(e -> {
             if( this.tipsUsed < this.gameLevel.getAmoutTip() ){
