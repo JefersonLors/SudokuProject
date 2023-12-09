@@ -3,10 +3,13 @@ package sudoku;
 import sudoku.enums.GameLevel;
 import sudoku.enums.StatusGame;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
 
 public class SudokuMain extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -44,18 +47,20 @@ public class SudokuMain extends JFrame {
             }
         });
     }
-    public SudokuMain(){
+    public SudokuMain() throws IOException {
         super();
         this.inicializeComponents();
         this.newGame();
     }
-    private void inicializeComponents(){
+    private void inicializeComponents() throws IOException {
         this.gameBoard = new PuzzleBoardPanel();
         this.menuBar = new JMenuBar();
         this.statusBar = new JMenuBar();
 
-        this.restartButton = new JButton( "Restart");
-        this.restartButton.setPreferredSize(new Dimension(95, 20));
+        Image restartIcon = ImageIO.read(new File("src/sudoku/images/restartIcon.png" ));
+        this.restartButton = new JButton(new ImageIcon(restartIcon.getScaledInstance(20, 20, restartIcon.SCALE_DEFAULT)));
+        this.restartButton.setPreferredSize(new Dimension(80, 30));
+        this.restartButton.setToolTipText("Restart");
         this.restartButton.addActionListener(e -> {
             int confirmation = 0;
             if( gameLevel != GameLevel.NON_SELECTED ){
@@ -75,12 +80,19 @@ public class SudokuMain extends JFrame {
             }
         });
 
-        this.pauseButton = new JButton( "Pause");
-        this.pauseButton.setPreferredSize(new Dimension(95, 20));
+        Image playIcon = ImageIO.read(new File("src/sudoku/images/startIcon.png"));
+        Image pauseIcon = ImageIO.read(new File("src/sudoku/images/pauseIcon.png"));
+        this.pauseButton = new JButton( new ImageIcon(pauseIcon.getScaledInstance(20, 20, pauseIcon.SCALE_DEFAULT)));
+        this.pauseButton.setPreferredSize(new Dimension(80, 30));
+        this.pauseButton.setToolTipText("Pause");
         this.pauseButton.addActionListener(e -> {
             if( this.statusGame != StatusGame.NON_INICIALIZED){
                 this.screenStatusGame.setText("Status : " + this.gameBoard.setPause());
-                this.pauseButton.setText(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? "Continue" : "Pause");
+                if( this.gameBoard.getStatusGame() == StatusGame.PAUSED  ){
+                    this.pauseButton.setIcon(new ImageIcon(playIcon.getScaledInstance(20, 20, playIcon.SCALE_DEFAULT)));
+                }else{
+                    this.pauseButton.setIcon(new ImageIcon(pauseIcon.getScaledInstance(20, 20, pauseIcon.SCALE_DEFAULT)));
+                }
                 this.statusGame = this.gameBoard.getStatusGame();
                 this.tipButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
                 this.restartButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
@@ -91,8 +103,10 @@ public class SudokuMain extends JFrame {
             }
         });
 
-        this.newGameButton = new JButton("New Game");
-        this.newGameButton.setPreferredSize(new Dimension(95, 20));
+        Image startIcon = ImageIO.read(new File("src/sudoku/images/playIcon.png"));
+        this.newGameButton = new JButton( new ImageIcon(startIcon.getScaledInstance(20, 20, startIcon.SCALE_DEFAULT)));
+        this.newGameButton.setPreferredSize(new Dimension(80, 30));
+        this.newGameButton.setToolTipText("Start");
         this.newGameButton.addActionListener(e -> {
             int confirmation = 0;
             if( gameLevel == GameLevel.NON_SELECTED ){
@@ -121,8 +135,10 @@ public class SudokuMain extends JFrame {
             }
         });
 
-        this.tipButton = new JButton("Tip");
-        this.tipButton.setPreferredSize(new Dimension(95, 20));
+        Image tipIcon = ImageIO.read(new File("src/sudoku/images/ideaIcon.png"));
+        this.tipButton = new JButton( new ImageIcon(tipIcon.getScaledInstance(20, 20, tipIcon.SCALE_DEFAULT)));
+        this.tipButton.setPreferredSize(new Dimension(80, 30));
+        this.tipButton.setToolTipText("Tip");
         this.tipButton.addActionListener(e -> {
             if( this.tipsUsed < this.gameLevel.getAmoutTip() ){
                 this.tipNumberSelected = new TipPanelDiolog().getSelectNumberTip();
@@ -195,7 +211,7 @@ public class SudokuMain extends JFrame {
         this.setResizable(false);
         this.setLocation(700, 200);
         this.setTitle("Sudoku Game");
-        this.setIconImage(new ImageIcon("src/sudoku/images/sudoku.png").getImage());
+        this.setIconImage(new ImageIcon("src/sudoku/images/sudokuIcon.png").getImage());
         this.setMenuBar();
         this.setStatusBar();
         this.addWindowListener(new WindowAdapter() {
