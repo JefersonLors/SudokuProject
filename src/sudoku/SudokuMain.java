@@ -81,7 +81,6 @@ public class SudokuMain extends JFrame {
             }
         });
 
-        Image playIcon = ImageIO.read(new File("src/sudoku/images/startIcon.png"));
         Image pauseIcon = ImageIO.read(new File("src/sudoku/images/pauseIcon.png"));
         this.pauseButton = new JButton( new ImageIcon(pauseIcon.getScaledInstance(20, 20, pauseIcon.SCALE_DEFAULT)));
         this.pauseButton.setPreferredSize(new Dimension(80, 30));
@@ -90,11 +89,6 @@ public class SudokuMain extends JFrame {
         this.pauseButton.addActionListener(e -> {
             if( this.statusGame != StatusGame.NON_INICIALIZED){
                 this.screenStatusGame.setText("Status : " + this.gameBoard.setPause());
-                if( this.gameBoard.getStatusGame() == StatusGame.PAUSED  ){
-                    this.pauseButton.setIcon(new ImageIcon(playIcon.getScaledInstance(20, 20, playIcon.SCALE_DEFAULT)));
-                }else{
-                    this.pauseButton.setIcon(new ImageIcon(pauseIcon.getScaledInstance(20, 20, pauseIcon.SCALE_DEFAULT)));
-                }
                 this.statusGame = this.gameBoard.getStatusGame();
                 this.tipButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
                 this.restartButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
