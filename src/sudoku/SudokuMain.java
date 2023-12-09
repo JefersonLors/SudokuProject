@@ -104,6 +104,7 @@ public class SudokuMain extends JFrame {
                     this.tipButton.setEnabled(true);
                     this.statusGame = StatusGame.PLAYING;
                     this.screenStatusGame.setText("Status : " + this.statusGame);
+                    this.screenGameTipAmount.setText("Tips: " + this.tipsUsed + "/"+ this.gameLevel.getAmoutTip());
                     this.startGameTimer();
                     this.startErrorCounter();
                     this.startHitsCounter();
@@ -273,11 +274,11 @@ public class SudokuMain extends JFrame {
 
         this.gameTimer = this.gameBoard.getGameTimer();
 
-        if( this.gameTimer != null ){
+        if ( this.gameTimer != null ) {
             this.gameTimer.restart();
-        }else{
-            this.gameTimer = new Timer(1000, e -> {
-                    if( SudokuMain.this.statusGame == StatusGame.PLAYING){
+        } else {
+            this.gameTimer = new Timer (1000, e -> {
+                    if( SudokuMain.this.statusGame == StatusGame.PLAYING) {
                         this.gameSeconds = ++this.gameSeconds % 60;
                         this.gameMinutes += (this.gameSeconds % 60 == 0 ? 1: 0);
                         this.screenGameTimer.setText("Timer: " + String.format( "%02d", this.gameMinutes ) + ":" + String.format( "%02d", this.gameSeconds));
@@ -302,7 +303,7 @@ public class SudokuMain extends JFrame {
         private JButton tipNumberNine;
         private int numberTipSelected;
 
-        public TipPanelDiolog(){
+        public TipPanelDiolog() {
             super(SudokuMain.this, true);
             super.setTitle("Tip");
             this.setResizable(false);

@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Adicionando um diálogo de confirmação antes de fechar a o jogo">
+    <list default="true" id="d49a3e0d-aab1-4f0f-8c78-4ee82bc58d14" name="Changes" comment="Corrigindo bug do timer não parar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/PuzzleBoardPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sudoku/SudokuMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/SudokuMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sudoku/enums/GameLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sudoku/enums/GameLevel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +24,19 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="3893d948-58eb-47ea-9f04-c9c07f169ad6" />
+        <option name="url" value="https://github.com/JefersonLors/SudokuProject.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -102,7 +113,7 @@
       <workItem from="1701648820102" duration="4549000" />
       <workItem from="1701774198932" duration="21934000" />
       <workItem from="1701862558308" duration="6248000" />
-      <workItem from="1702080958579" duration="1858000" />
+      <workItem from="1702080958579" duration="2764000" />
     </task>
     <task id="LOCAL-00001" summary="Iniciando o projeto">
       <option name="closed" value="true" />
@@ -344,14 +355,21 @@
       <option name="project" value="LOCAL" />
       <updated>1701896530897</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Corrigindo bug do timer não parar">
+      <option name="closed" value="true" />
+      <created>1702082890911</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1702082890911</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Criação da tool bar com opções de nível e reinicio de jogo" />
     <MESSAGE value="Eventos dos botões criados" />
     <MESSAGE value="Adicionando identificador de nível atual" />
     <MESSAGE value="Correção de cores e ajuste no botão New Game" />
@@ -376,7 +394,8 @@
     <MESSAGE value="Corrigindo dimensões da status bar" />
     <MESSAGE value="Correção de bug de reset de tips utilizadas" />
     <MESSAGE value="Adicionando um diálogo de confirmação antes de fechar a o jogo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adicionando um diálogo de confirmação antes de fechar a o jogo" />
+    <MESSAGE value="Corrigindo bug do timer não parar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Corrigindo bug do timer não parar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -388,7 +407,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/sudoku/SudokuMain.java</url>
-          <line>305</line>
+          <line>308</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
