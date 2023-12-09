@@ -31,8 +31,9 @@ public class SudokuConstants {
     public static final Color BG_NUMBER_NINE = new Color(208, 187, 180, 234);
     public static final Color BG_PANEL_TIP = new Color(217, 217, 217);
 
+    //COR DOS BOTÕES
     public static final Color TIP_BUTTON_COLOR = new Color(224, 184, 131);
-    public static final Color START_BUTTON_COLOR = new Color(168, 224, 131);
-    public static final Color PAUSE_BUTTON_COLOR = new Color(224, 131, 131);
-    public static final Color RESTART_BUTTON_COLOR = new Color(131, 188, 224);
+    public static final Color START_BUTTON_COLOR = new Color(136, 183, 107);
+    public static final Color PAUSE_BUTTON_COLOR = new Color(178, 108, 108);
+    public static final Color RESTART_BUTTON_COLOR = new Color(131, 171, 224);
 }
