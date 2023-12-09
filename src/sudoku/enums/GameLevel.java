@@ -1,7 +1,7 @@
 package sudoku.enums;
 
 public enum GameLevel {
-    EASY(1, 1),
+    EASY(5, 1),
     MEDIUM(80, 1),
     HARD(150,1),
     NON_SELECTED(0, 0);

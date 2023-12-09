@@ -57,13 +57,21 @@ public class SudokuMain extends JFrame {
         this.restartButton = new JButton( "Restart");
         this.restartButton.setPreferredSize(new Dimension(95, 20));
         this.restartButton.addActionListener(e -> {
+            int confirmation = 0;
             if( gameLevel != GameLevel.NON_SELECTED ){
-                this.gameSeconds = 0;
-                this.gameBoard.restartGame();
-                this.startGameTimer();
-                this.startErrorCounter();
-                this.startHitsCounter();
-                revalidate();
+                if( this.gameBoard.haveProgres() ){
+                    confirmation = JOptionPane.showConfirmDialog(this,
+                            "Deseja abandonar o jogo atual? Todo o seu progresso será perdido.",
+                            "Aviso", JOptionPane.YES_NO_OPTION);
+                }
+                if( confirmation == 0 ){
+                    this.gameSeconds = 0;
+                    this.gameBoard.restartGame();
+                    this.startGameTimer();
+                    this.startErrorCounter();
+                    this.startHitsCounter();
+                    revalidate();
+                }
             }
         });
 
@@ -193,6 +201,7 @@ public class SudokuMain extends JFrame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                System.out.println(SudokuMain.this.gameBoard.haveProgres());
                 if( SudokuMain.this.gameBoard.haveProgres() ){
                     int confirmation = JOptionPane.showConfirmDialog(SudokuMain.this,
                             "Deseja abandonar o jogo atual? Todo o seu progresso será perdido.",
