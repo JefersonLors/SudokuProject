@@ -3,11 +3,13 @@ package sudoku;
 import sudoku.enums.GameLevel;
 import sudoku.enums.StatusGame;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.io.File;
+import java.io.IOException;
 
 public class SudokuMain extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -45,35 +47,54 @@ public class SudokuMain extends JFrame {
             }
         });
     }
-    public SudokuMain(){
+    public SudokuMain() throws IOException {
         super();
         this.inicializeComponents();
         this.newGame();
     }
-    private void inicializeComponents(){
+    private void inicializeComponents() throws IOException {
         this.gameBoard = new PuzzleBoardPanel();
         this.menuBar = new JMenuBar();
         this.statusBar = new JMenuBar();
 
-        this.restartButton = new JButton( "Restart");
-        this.restartButton.setPreferredSize(new Dimension(95, 20));
+        Image restartIcon = ImageIO.read(new File("src/sudoku/images/restartIcon.png" ));
+        this.restartButton = new JButton(new ImageIcon(restartIcon.getScaledInstance(20, 20, restartIcon.SCALE_DEFAULT)));
+        this.restartButton.setPreferredSize(new Dimension(80, 30));
+        this.restartButton.setBackground(SudokuConstants.RESTART_BUTTON_COLOR);
+        this.restartButton.setToolTipText("Restart");
         this.restartButton.addActionListener(e -> {
+            int confirmation = 0;
             if( gameLevel != GameLevel.NON_SELECTED ){
-                this.gameSeconds = 0;
-                this.gameBoard.restartGame();
-                this.startGameTimer();
-                this.startErrorCounter();
-                this.startHitsCounter();
-                revalidate();
+                if( this.gameBoard.haveProgres() ){
+                    confirmation = JOptionPane.showConfirmDialog(this,
+                            "Deseja abandonar o jogo atual? Todo o seu progresso será perdido.",
+                            "Aviso", JOptionPane.YES_NO_OPTION);
+                }
+                if( confirmation == 0 ){
+                    this.gameSeconds = 0;
+                    this.gameBoard.restartGame();
+                    this.startGameTimer();
+                    this.startErrorCounter();
+                    this.startHitsCounter();
+                    revalidate();
+                }
             }
         });
 
-        this.pauseButton = new JButton( "Pause");
-        this.pauseButton.setPreferredSize(new Dimension(95, 20));
+        Image playIcon = ImageIO.read(new File("src/sudoku/images/startIcon.png"));
+        Image pauseIcon = ImageIO.read(new File("src/sudoku/images/pauseIcon.png"));
+        this.pauseButton = new JButton( new ImageIcon(pauseIcon.getScaledInstance(20, 20, pauseIcon.SCALE_DEFAULT)));
+        this.pauseButton.setPreferredSize(new Dimension(80, 30));
+        this.pauseButton.setBackground(SudokuConstants.PAUSE_BUTTON_COLOR);
+        this.pauseButton.setToolTipText("Pause");
         this.pauseButton.addActionListener(e -> {
             if( this.statusGame != StatusGame.NON_INICIALIZED){
                 this.screenStatusGame.setText("Status : " + this.gameBoard.setPause());
-                this.pauseButton.setText(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? "Continue" : "Pause");
+                if( this.gameBoard.getStatusGame() == StatusGame.PAUSED  ){
+                    this.pauseButton.setIcon(new ImageIcon(playIcon.getScaledInstance(20, 20, playIcon.SCALE_DEFAULT)));
+                }else{
+                    this.pauseButton.setIcon(new ImageIcon(pauseIcon.getScaledInstance(20, 20, pauseIcon.SCALE_DEFAULT)));
+                }
                 this.statusGame = this.gameBoard.getStatusGame();
                 this.tipButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
                 this.restartButton.setEnabled(this.gameBoard.getStatusGame() == StatusGame.PAUSED ? false : true);
@@ -84,8 +105,11 @@ public class SudokuMain extends JFrame {
             }
         });
 
-        this.newGameButton = new JButton("New Game");
-        this.newGameButton.setPreferredSize(new Dimension(95, 20));
+        Image startIcon = ImageIO.read(new File("src/sudoku/images/playIcon.png"));
+        this.newGameButton = new JButton( new ImageIcon(startIcon.getScaledInstance(20, 20, startIcon.SCALE_DEFAULT)));
+        this.newGameButton.setPreferredSize(new Dimension(80, 30));
+        this.newGameButton.setBackground(SudokuConstants.START_BUTTON_COLOR);
+        this.newGameButton.setToolTipText("Start");
         this.newGameButton.addActionListener(e -> {
             int confirmation = 0;
             if( gameLevel == GameLevel.NON_SELECTED ){
@@ -105,6 +129,7 @@ public class SudokuMain extends JFrame {
                     this.tipButton.setEnabled(true);
                     this.statusGame = StatusGame.PLAYING;
                     this.screenStatusGame.setText("Status : " + this.statusGame);
+                    this.screenGameTipAmount.setText("Tips: " + this.tipsUsed + "/"+ this.gameLevel.getAmoutTip());
                     this.startGameTimer();
                     this.startErrorCounter();
                     this.startHitsCounter();
@@ -113,8 +138,11 @@ public class SudokuMain extends JFrame {
             }
         });
 
-        this.tipButton = new JButton("Tip");
-        this.tipButton.setPreferredSize(new Dimension(95, 20));
+        Image tipIcon = ImageIO.read(new File("src/sudoku/images/ideaIcon.png"));
+        this.tipButton = new JButton( new ImageIcon(tipIcon.getScaledInstance(20, 20, tipIcon.SCALE_DEFAULT)));
+        this.tipButton.setPreferredSize(new Dimension(80, 30));
+        this.tipButton.setBackground(SudokuConstants.TIP_BUTTON_COLOR);
+        this.tipButton.setToolTipText("Tip");
         this.tipButton.addActionListener(e -> {
             if( this.tipsUsed < this.gameLevel.getAmoutTip() ){
                 this.tipNumberSelected = new TipPanelDiolog().getSelectNumberTip();
@@ -187,12 +215,13 @@ public class SudokuMain extends JFrame {
         this.setResizable(false);
         this.setLocation(700, 200);
         this.setTitle("Sudoku Game");
-        this.setIconImage(new ImageIcon("src/sudoku/images/sudoku.png").getImage());
+        this.setIconImage(new ImageIcon("src/sudoku/images/sudokuIcon.png").getImage());
         this.setMenuBar();
         this.setStatusBar();
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                System.out.println(SudokuMain.this.gameBoard.haveProgres());
                 if( SudokuMain.this.gameBoard.haveProgres() ){
                     int confirmation = JOptionPane.showConfirmDialog(SudokuMain.this,
                             "Deseja abandonar o jogo atual? Todo o seu progresso será perdido.",
@@ -271,16 +300,20 @@ public class SudokuMain extends JFrame {
     private void startGameTimer(){
         this.gameSeconds = 0;
         this.gameMinutes = 0;
-        if( this.gameTimer != null ){
+
+        this.gameTimer = this.gameBoard.getGameTimer();
+
+        if ( this.gameTimer != null ) {
             this.gameTimer.restart();
-        }else{
-            this.gameTimer = new Timer(1000, e -> {
-                    if( SudokuMain.this.statusGame == StatusGame.PLAYING){
+        } else {
+            this.gameTimer = new Timer (1000, e -> {
+                    if( SudokuMain.this.statusGame == StatusGame.PLAYING) {
                         this.gameSeconds = ++this.gameSeconds % 60;
                         this.gameMinutes += (this.gameSeconds % 60 == 0 ? 1: 0);
                         this.screenGameTimer.setText("Timer: " + String.format( "%02d", this.gameMinutes ) + ":" + String.format( "%02d", this.gameSeconds));
                     }
             });
+            this.gameBoard.setGameTimer(this.gameTimer);
             this.gameTimer.start();
         }
     }
@@ -299,7 +332,7 @@ public class SudokuMain extends JFrame {
         private JButton tipNumberNine;
         private int numberTipSelected;
 
-        public TipPanelDiolog(){
+        public TipPanelDiolog() {
             super(SudokuMain.this, true);
             super.setTitle("Tip");
             this.setResizable(false);
