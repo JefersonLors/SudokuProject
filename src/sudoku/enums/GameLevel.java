@@ -1,9 +1,9 @@
 package sudoku.enums;
 
 public enum GameLevel {
-    EASY(5, 1),
-    MEDIUM(80, 1),
-    HARD(150,1),
+    EASY(40, 1),
+    MEDIUM(80, 2),
+    HARD(150,3),
     NON_SELECTED(0, 0);
     private int amountToGuess;
     private int amountTips;
